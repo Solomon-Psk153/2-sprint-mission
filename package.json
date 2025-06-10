@@ -1,0 +1,39 @@
+{
+  "name": "bootcamp",
+  "version": "1.0.0",
+  "scripts": {
+    "appdev": "nodemon --watch three three/bin/www.js",
+    "seed": "node three/utils/seed.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@faker-js/faker": "^9.8.0",
+    "@hmcts/nodejs-healthcheck": "^1.8.5",
+    "@prisma/client": "^6.8.2",
+    "@types/express": "^5.0.2",
+    "axios": "^1.9.0",
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-generator": "^4.2.0",
+    "http-errors": "^2.0.0",
+    "is-email": "^1.0.2",
+    "is-uuid": "^1.0.2",
+    "json-server": "^1.0.0-beta.3",
+    "lodash": "^4.17.21",
+    "mongoose": "^7.8.7",
+    "morgan": "^1.10.0",
+    "multer": "^2.0.0",
+    "node-cron": "^4.1.0",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.8.2",
+    "superstruct": "^2.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "uuid": "^11.1.0"
+  }
+}

@@ -1,0 +1,125 @@
+GET http://localhost:3000/product/list
+
+###
+
+GET http://localhost:3000/product/list/d6ae4be4-31d3-46f0-bb73-63ccb72bffb8
+
+###
+
+POST http://localhost:3000/product/create
+Content-Type: application/json; charset=UTF-8
+
+{
+  "name": "psk Wooden Gloves",
+  "description": "this is my create Usus aduro vomito consuasor voveo valens. Molestiae enim bos aranea. Deprecator neque excepturi ventus tot claudeo.",
+  "price": 18239,
+  "tags":[
+    {"name":"psk"},
+	  {"name":"glove"},
+	  {"name":"wood"}
+  ]
+}
+
+###
+
+PATCH http://localhost:3000/product/update/d6ae4be4-31d3-46f0-bb73-63ccb72bffb8
+Content-Type: application/json; charset=UTF-8
+
+{
+  "name": "psk new Gloves",
+  "description": "my glove is perfect!! 100% protect your hand from cold!",
+  "price": 18239,
+  "tags":[
+    {"name":"psk"},
+    {"name":"100% warming"},
+    {"name":"new"},
+    {"name":"my hands!"}
+  ]
+}
+
+###
+
+DELETE http://localhost:3000/product/delete/9375b225-1309-43be-8cf6-9cccc45c596c
+
+###
+
+GET http://localhost:3000/freeboard/list
+
+###
+
+GET http://localhost:3000/freeboard/list/2fe31ee1-cd4d-429a-8fec-19e4ebd8cfee
+
+###
+
+POST http://localhost:3000/freeboard/create
+Content-Type: application/json; charset=UTF-8
+
+{
+  "title": "hello world!",
+  "content": "life is short, use python!"
+}
+
+###
+
+PATCH http://localhost:3000/freeboard/update/9c925339-ea5a-4558-a4fa-d5e7840bb159
+Content-Type: application/json; charset=UTF-8
+
+{
+  "title": "To C, or not to C: that is the question.",
+  "content": "life is short, use python!"
+}
+
+###
+
+DELETE http://localhost:3000/freeboard/delete/9c925339-ea5a-4558-a4fa-d5e7840bb159
+
+###
+
+GET http://localhost:3000/comment/list/2fe31ee1-cd4d-429a-8fec-19e4ebd8cfee
+
+###
+
+POST http://localhost:3000/comment/create/2fe31ee1-cd4d-429a-8fec-19e4ebd8cfee
+Content-Type: application/json; charset=UTF-8
+
+{
+  "title": "To C, or not to C: that is the question.",
+  "content": "life is short, use python!"
+}
+
+###
+
+POST http://localhost:3000/comment/create/2fe31ee1-cd4d-429a-8fec-19e4ebd8cfee/a168a811-9736-4fe6-8cbb-b7de78045c73
+Content-Type: application/json; charset=UTF-8
+
+{
+  "title": "To C, or not to C: that is the question.",
+  "content": "life is short, use python!"
+}
+
+###
+
+PATCH http://localhost:3000/comment/update/2fe31ee1-cd4d-429a-8fec-19e4ebd8cfee/a168a811-9736-4fe6-8cbb-b7de78045c73
+Content-Type: application/json; charset=UTF-8
+
+{
+  "title": "that is the question: To C, or not to C.",
+  "content": "use python! life is short!"
+}
+
+###
+
+DELETE http://localhost:3000/comment/delete/2fe31ee1-cd4d-429a-8fec-19e4ebd8cfee/a168a811-9736-4fe6-8cbb-b7de78045c73
+
+###
+
+GET http://localhost:3000/image/list
+
+###
+
+DELETE http://localhost:3000/image/delete
+Content-Type: application/json; charset=UTF-8
+
+{
+  "filenames": ["wallpaperflare.com_wallpaper1749503951050.jpg"]
+}
