@@ -1,22 +1,26 @@
-import {ElectronicProduct, Product, apiKey} from './main.js';
+import {ElectronicProduct, Product} from './main.js';
+import dotenv from 'dotenv'
+dotenv.config({path: '../.env'});
 
 async function getProductList(params = {}){
     try{
-        const url = new URL(`${apiKey}/products`);
+        const url = new URL(`${process.env.APIHOST}/products`);
         Object.keys(params).forEach((v) => url.searchParams.append(v, params[v]));
         const res = await fetch(url);
         if(!res.ok){
-            console.log(res.status + '응답이 발생했습니다.');
+            throw new Error(res.status + '응답이 발생했습니다.');
         }
 
         const products = [];
-        for(const item of (await res.json())['list']){
-            const itemToArray = Object.values(item).slice(1, 6);
-            // console.log(itemToArray)
+        const items = await res.json();
+
+        for(const item of items['list']){
+            const { name, description, price, tags, images, favoriteCount, manufacturer } = item;
+            
             if(item.tags.includes('전자제품'))
-                products.push(new ElectronicProduct(...itemToArray, 0, `unknown`));
+                products.push(new ElectronicProduct(name, description, price, tags, images, favoriteCount, manufacturer));
             else
-                products.push(new Product(...itemToArray , 0));
+                products.push(new Product(name, description, price, tags, images, favoriteCount));
         }
         console.log(products);
     } catch(err) {
@@ -28,12 +32,14 @@ async function getProductList(params = {}){
 
 async function getProduct(id){
     try{
-        const res = await fetch(`${apiKey}/products/${id}`);
+        const res = await fetch(`${process.env.APIHOST}/products/${id}`);
         if(!res.ok){
-            console.log(res.status + '응답이 발생했습니다.');
+            throw new Error(res.status + '응답이 발생했습니다.');
         }
 
-        console.log(await res.json());
+        const productById = await res.json();
+
+        console.log(productById);
     } catch(err){
         console.log(err);
     } finally {
@@ -44,16 +50,18 @@ async function getProduct(id){
 async function createProduct(data){
     let rv;
     try{
-        const res = await fetch(`${apiKey}/products`, {
+        const res = await fetch(`${process.env.APIHOST}/products`, {
             method: 'POST',
             headers: {'content-type':'application/json'},
             body: JSON.stringify(data)
         });
         if(!res.ok){
-            console.log(res.status + '응답이 발생했습니다.');
+            throw new Error(res.status + '응답이 발생했습니다.');
         }
 
-        console.log(await res.json());
+        const createdProduct = await res.json();
+
+        console.log(createdProduct);
         rv = res.id;
     } catch(err){
         console.log(err);
@@ -66,17 +74,19 @@ async function createProduct(data){
 
 async function patchProduct(id, data){
     try{
-        const res = await fetch(`${apiKey}/products/${id}`,{
+        const res = await fetch(`${process.env.APIHOST}/products/${id}`,{
             method: 'PATCH',
             headers: {'content-type':'application/json'},
             body: JSON.stringify(data)
         });
 
         if(!res.ok){
-            console.log(res.status + '응답이 발생했습니다.');
+            throw new Error(res.status + '응답이 발생했습니다.');
         }
 
-        console.log(await res.json());
+        const patchedProduct = await res.json();
+
+        console.log(patchedProduct);
     } catch(err){
         console.log(err);
     } finally {
@@ -86,14 +96,16 @@ async function patchProduct(id, data){
 
 async function deleteProduct(id){
     try{
-        const res = await fetch(`${apiKey}/products/${id}`, {
+        const res = await fetch(`${process.env.APIHOST}/products/${id}`, {
             method:'DELETE'
         });
         if(!res.ok){
-            console.log(res.status + '응답이 발생했습니다.');
+            throw new Error(res.status + '응답이 발생했습니다.');
         }
 
-        console.log(await res.json());
+        const deletedId = await res.json();
+
+        console.log(deletedId);
     } catch(err){
         console.log(err);
     } finally {
