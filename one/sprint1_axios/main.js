@@ -1,17 +1,15 @@
 import * as article from './ArticleService.js';
 import * as product from './ProductService.js';
-import fs from 'fs';
 import axios from "axios";
-import { createRequire } from 'node:module';
+import dotenv from 'dotenv';
+dotenv.config({path: '../.env'});
 
-const require = createRequire(import.meta.url);
-export const apiKey = fs.readFileSync(require.resolve('../ArticleProductAPI'), 'utf8');
 export const instance = axios.create({
-    baseURL: apiKey
+    baseURL: process.env.APIHOST
 });
 
 class Product {
-    constructor(name, description, price, tags, images, favoriteCount) {
+    constructor(name, description, price, tags, images, favoriteCount=0) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -33,7 +31,7 @@ class ElectronicProduct extends Product {
 }
 
 class Article {
-    constructor(title, content, writer, likeCount) {
+    constructor(title, content, writer, likeCount=0) {
         this.title = title;
         this.content = content;
         this.writer = writer;

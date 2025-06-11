@@ -1,12 +1,13 @@
-import { apiKey } from './main.js';
+import dotenv from 'dotenv'
+dotenv.config({path: '../.env'});
 
 function getArticleList(params = {}){
-    const url = new URL('https://panda-market-api-crud.vercel.app/articles');
+    const url = new URL(`${process.env.APIHOST}/articles`);
     Object.keys(params).forEach((v) => url.searchParams.append(v, params[v]));
     return fetch(url)
                 .then((res) => {
                     if(!res.ok){
-                        console.log(res.status + '응답이 발생했습니다.');
+                        throw new Error(res.status + '응답이 발생했습니다.');
                     }
 
                     return res.json();
@@ -18,10 +19,10 @@ function getArticleList(params = {}){
 }
 
 function getArticle(id){
-    return fetch(`https://panda-market-api-crud.vercel.app/articles/${id}`)
+    return fetch(`${process.env.APIHOST}/articles/${id}`)
                 .then((res) => {
                     if(!res.ok){
-                        console.log(res.status + '응답이 발생했습니다.');
+                        throw new Error(res.status + '응답이 발생했습니다.');
                     }
 
                     return res.json();
@@ -33,14 +34,14 @@ function getArticle(id){
 }
 
 function createArticle(payload){
-    return fetch(`https://panda-market-api-crud.vercel.app/articles`, {
+    return fetch(`${process.env.APIHOST}/articles`, {
         method: 'POST',
         headers: {'content-type':'application/json'},
         body:JSON.stringify(payload)
     })
                 .then((res) => {
                     if(!res.ok){
-                        console.log(res.status + '응답이 발생했습니다.');
+                        throw new Error(res.status + '응답이 발생했습니다.');
                     }
 
                     return res.json();
@@ -52,14 +53,14 @@ function createArticle(payload){
 }
 
 function patchArticle(id, data){
-    return fetch(`https://panda-market-api-crud.vercel.app/articles/${id}`, {
+    return fetch(`${process.env.APIHOST}/articles/${id}`, {
         method: 'PATCH',
         headers: {'content-type':'application/json'},
         body:JSON.stringify(data)
     })
                 .then((res) => {
                     if(!res.ok){
-                        console.log(res.status + '응답이 발생했습니다.');
+                        throw new Error(res.status + '응답이 발생했습니다.');
                     }
 
                     return res.json();
@@ -71,12 +72,12 @@ function patchArticle(id, data){
 }
 
 function deleteArticle(id){
-    return fetch(`https://panda-market-api-crud.vercel.app/articles/${id}`, {
+    return fetch(`${process.env.APIHOST}/articles/${id}`, {
         method:'DELETE'
     })
                 .then((res) => {
                     if(!res.ok){
-                        console.log(res.status + '응답이 발생했습니다.');
+                        throw new Error(res.status + '응답이 발생했습니다.');
                     }
 
                     return res.json();
