@@ -1,0 +1,3 @@
+@port = 56000
+
+GET http://localhost:{{port}}/product/list

@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev":"nodemon --watch src --exec ts-node src/bin/www.ts",
+    "dev": "nodemon --watch src --exec ts-node src/bin/www.ts",
+    "seed":"ts-node src/bin/seeding.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,25 +13,33 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@hmcts/nodejs-healthcheck": "^1.8.5",
     "@prisma/client": "^6.11.1",
     "axios": "^1.10.0",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
+    "debug": "^4.4.1",
     "dotenv": "^17.0.1",
     "express": "^5.1.0",
+    "express-actuator": "^1.8.4",
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.2.0",
     "multer": "^2.0.1",
     "passport-openidconnect": "^0.1.2",
     "superstruct": "^2.0.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.9.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.19",
+    "@types/debug": "^4.1.12",
     "@types/express": "^5.0.3",
+    "@types/express-actuator": "^1.8.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/multer": "^2.0.0",
+    "@types/node": "^24.0.10",
     "@types/passport": "^1.0.17",
     "@types/passport-openidconnect": "^0.1.3",
     "nodemon": "^3.1.10"

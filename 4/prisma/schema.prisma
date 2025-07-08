@@ -18,6 +18,7 @@ model User {
   id        String         @id
   email     String         @unique
   nickname  String?
+  imageUrl  String?
   images    Image?
   password  String?
   accounts  OAuthAccount[]
