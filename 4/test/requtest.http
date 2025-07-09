@@ -1,3 +1,22 @@
 @port = 56000
 
 GET http://localhost:{{port}}/product/list
+
+###
+POST http://localhost:{{port}}/auth/register
+Content-Type: application/json
+
+{
+    "email":"cidaja7735@binafex.com",
+    "nickname": "testuser",
+    "password": "testpassword"
+}
+
+### 
+POST http://localhost:{{port}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "cidaja7735@binafex.com",
+    "password": "testpassword"
+}

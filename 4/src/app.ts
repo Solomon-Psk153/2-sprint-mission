@@ -2,7 +2,9 @@ import createError from 'http-errors';
 import cors from 'cors';
 import express, { ErrorRequestHandler, RequestHandler } from 'express';
 import actuator from 'express-actuator';
-import productRouter from './routes/productRouter';
+import router from './routes';
+import auth from 'express-openid-connect';
+import passport from './lib/passport/index';
 // import freeBoardRouter
 // import commentRouter
 // import imgRouter
@@ -10,8 +12,10 @@ import productRouter from './routes/productRouter';
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(actuator());
-app.use('/product', productRouter);
+app.use(actuator()); // https://github.com/rcruzper/express-actuator/tree/master
+app.use(passport.initialize());
+
+app.use(router);
 
 // app.use('/freeboard', freeBoardRouter);
 // app.use('/comment', commentRouter);

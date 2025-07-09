@@ -2,7 +2,8 @@
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "nickname" TEXT NOT NULL,
+    "nickname" TEXT,
+    "imageUrl" TEXT,
     "password" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -14,14 +15,11 @@ CREATE TABLE "User" (
 CREATE TABLE "OAuthAccount" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "provider" TEXT NOT NULL,
-    "providerId" TEXT NOT NULL,
+    "provider" TEXT,
+    "providerId" TEXT,
     "accessToken" TEXT NOT NULL,
     "refreshToken" TEXT NOT NULL,
     "idToken" TEXT,
-    "expiresAt" INTEGER,
-    "scope" TEXT,
-    "tokenType" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -105,6 +103,9 @@ CREATE TABLE "Image" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "OAuthAccount_providerId_key" ON "OAuthAccount"("providerId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Image_filename_key" ON "Image"("filename");

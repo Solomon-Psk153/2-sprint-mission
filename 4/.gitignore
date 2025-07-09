@@ -145,3 +145,4 @@ generated/
 .DS_Store
 node_modules
 /generated/prisma
+ignore/

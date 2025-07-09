@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
 import app from '../app';
-import debug from 'debug';
 import http from 'http'
 import dotenv from 'dotenv';
 import { portType, addrType } from '../types/www';
+import { PORT } from '../lib/staticConsts';
+import { devDebug } from '../lib/debugs';
 
 dotenv.config({ path: '../.env' });
-
-const serverDebug = debug("server:onListening");
 
 // port setting
 const port: portType =
@@ -22,7 +21,7 @@ const port: portType =
         if (port >= 0) { return port; }
 
         return false;
-    }(process.env.PORT || 3000));
+    }(PORT));
 
 app.set('port', port);
 
@@ -60,7 +59,7 @@ const onListening = function (): void {
     const addr: addrType = server.address();
     if (addr != null) {
         const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
-        serverDebug('Listening on ' + bind);
+        devDebug('Listening on ' + bind);
     }
 }
 
@@ -72,8 +71,8 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 process.on('SIGTERM', () => {
-    serverDebug('SIGTERM signal received: closing HTTP server');
+    devDebug('SIGTERM signal received: closing HTTP server');
     server.close(() => {
-        serverDebug('HTTP server closed')
+        devDebug('HTTP server closed')
     });
 });

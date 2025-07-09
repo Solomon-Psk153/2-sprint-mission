@@ -1,0 +1,31 @@
+import jwt from 'jsonwebtoken';
+import {
+    JWT_ACCESS_TOKEN_SECRET,
+    JWT_REFRESH_TOKEN_SECRET,
+} from './staticConsts';
+
+function generateToken(userId: string, tokenType: "accessToken" | "refreshToken"){
+    if(tokenType === "accessToken") return jwt.sign({ sub: userId }, JWT_ACCESS_TOKEN_SECRET, {
+        expiresIn: '1h',
+    });
+    else return jwt.sign({ sub: userId }, JWT_REFRESH_TOKEN_SECRET, {
+        expiresIn: '1d',
+    });
+}
+
+function isTokenValid(token: string, tokenType: "accessToken" | "refreshToken"){
+    try{
+        // let verifiedToken;
+        if(tokenType === "accessToken")
+            jwt.verify(token, JWT_ACCESS_TOKEN_SECRET);
+        else jwt.verify(token, JWT_ACCESS_TOKEN_SECRET);
+        return true;
+    } catch(err){
+        return false;
+    }
+}
+
+export {
+    generateToken,
+    isTokenValid
+};
