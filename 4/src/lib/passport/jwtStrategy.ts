@@ -8,7 +8,7 @@ const accessTokenOptions = {
 };
 
 const refreshTokenOptions = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: ExtractJwt.fromBodyField('refreshToken'),
   secretOrKey: JWT_REFRESH_TOKEN_SECRET,
 };
 
@@ -20,8 +20,7 @@ const jwtVerify: VerifyCallback = async function (payload, done) {
     
     if(user != null)
       return done(null, user);
-    else
-      return done(null, false, {message: "user not found"});
+    return done(null, false, {message: "user not found"});
   } catch (error) {
     return done(error, false, {message: "error from prisma/db"});
   }

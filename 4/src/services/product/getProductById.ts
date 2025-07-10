@@ -1,0 +1,22 @@
+import db from "../../model/prisma"
+
+const getProductById = async function(productOwnid: string){
+    const productById = await db.product.findUniqueOrThrow({
+        where: { id:productOwnid },
+        select: {
+            id: true,
+            name:true,
+            description:true,
+            price:true,
+            tags:{
+                select:{
+                    tag:true
+                }
+            }
+        }
+    });
+
+    return productById;
+}
+
+export default getProductById;

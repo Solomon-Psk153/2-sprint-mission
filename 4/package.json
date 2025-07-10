@@ -7,7 +7,7 @@
     "dev": "nodemon --watch src --exec DEBUG=development ts-node src/bin/www.ts",
     "seed": "ts-node src/bin/seeding.ts",
     "migrate": "npx prisma migrate dev && npx prisma generate",
-    "reset":"npx prisma migrate reset && npx prisma migrate dev",
+    "reset":"npx prisma migrate reset && npx prisma generate",
     "superreset":"rm -rf prisma/migrations && npx prisma migrate reset && npx prisma migrate dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

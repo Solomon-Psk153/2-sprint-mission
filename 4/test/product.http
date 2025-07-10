@@ -1,0 +1,59 @@
+@port = 56000
+
+GET http://localhost:{{port}}/product/list
+
+###
+
+GET http://localhost:{{port}}/product/tags
+
+###
+
+@productId = 54a4645e-0770-4b90-9cdf-2a66ba0bded5
+GET http://localhost:{{port}}/product/list/{{productId}}
+
+###
+
+@productTag = psk
+GET http://localhost:{{port}}/product/tags/{{productTag}}
+
+###
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDRjYzI3Yi1mZDQzLTQwYTEtOTI5NC05YmFjZDg5YzA2NjQiLCJpYXQiOjE3NTIxODY4NjgsImV4cCI6MTc1MjE5MDQ2OH0.iVkduEbzZZNvVq_wB6WS6W0fdwpdsXBek2EkyURhW-s
+POST http://localhost:{{port}}/product/create
+Content-Type: application/json; charset=UTF-8
+Authorization: Bearer {{accessToken}}
+
+{
+    "name": "psk Wooden Gloves",
+    "description": "this is my create Usus aduro vomito consuasor voveo valens. Molestiae enim bos aranea. Deprecator neque excepturi ventus tot claudeo.",
+    "price": 18239,
+    "tags":[
+        {"name":"psk"},
+        {"name":"glove"},
+        {"name":"wood"}
+    ]
+}
+
+###
+
+@updateProductId = 7628ec40-907b-4f4d-9633-21f3f10775ab
+PATCH http://localhost:{{port}}/product/update/{{updateProductId}}
+Content-Type: application/json; charset=UTF-8
+Authorization: Bearer {{accessToken}}
+
+{
+    "name": "psk new Gloves",
+    "description": "my glove is perfect!! 100% protect your hand from cold!",
+    "price": 99999,
+    "tags":[
+        {"name":"psk"},
+        {"name":"100% warming"},
+        {"name":"new"},
+        {"name":"my hands!"}
+    ]
+}
+
+###
+
+@deleteProductId = 7628ec40-907b-4f4d-9633-21f3f10775ab
+DELETE http://localhost:{{port}}/product/delete/{{deleteProductId}}
+Authorization: Bearer {{accessToken}}

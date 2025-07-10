@@ -1,0 +1,39 @@
+@port = 56000
+
+###
+
+POST http://localhost:{{port}}/auth/register
+Content-Type: application/json; charset=UTF-8
+
+{
+    "email":"cidaja7735@binafex.com",
+    "nickname": "testuser",
+    "password": "testpassword"
+}
+
+### 
+POST http://localhost:{{port}}/auth/login
+Content-Type: application/json; charset=UTF-8
+
+{
+    "email": "cidaja7735@binafex.com",
+    "password": "testpassword"
+}
+
+###
+
+POST http://localhost:{{port}}/auth/logout
+
+###
+
+@refreshToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDRjYzI3Yi1mZDQzLTQwYTEtOTI5NC05YmFjZDg5YzA2NjQiLCJpYXQiOjE3NTIxODY4NjgsImV4cCI6MTc1MjI3MzI2OH0.vMTfGTfEEMr-TkqZkD8p4QZeQtx6D8wcy7dRowBX9b4
+POST http://localhost:{{port}}/auth/refresh
+Content-Type: application/json; charset=UTF-8
+
+{
+    "email": "cidaja7735@binafex.com",
+    "password": "testpassword",
+    "refreshToken": "{{refreshToken}}"
+}
+
+# 토큰을 만료시키려면, 오직 하나의 토큰만 유효하게 하도록 DB에 관련 정보를 저장하거나 블랙리스트 목록을 통해서 관리할 수 있도록 한다.

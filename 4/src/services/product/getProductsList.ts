@@ -17,29 +17,33 @@ const getProductsList = async (query: query) => {
     const nameSearch = query.name;
     const descriptionSearch = query.description;
 
-    const where = {
-        ...(nameSearch !== undefined && {
-            name: {
-                contains: nameSearch,
-                mode: Prisma.QueryMode.insensitive
-            }
-        }),
-        ...(descriptionSearch !== undefined && {
-            description: { 
-                contains: descriptionSearch, 
-                mode: Prisma.QueryMode.insensitive 
-            }
-        })
-    };
-
     const productsList = await db.product.findMany({
-        ...(where !== undefined && { where }),
+        where: {
+            ...(nameSearch !== undefined && {
+                name: {
+                    contains: nameSearch,
+                    mode: Prisma.QueryMode.insensitive
+                }
+            }),
+            ...(descriptionSearch !== undefined && {
+                description: { 
+                    contains: descriptionSearch, 
+                    mode: Prisma.QueryMode.insensitive 
+                }
+            })
+        },
 
         select: {
             id: true,
             name: true,
             price: true,
             createdAt: true,
+            description: true,
+            tags:{
+                select:{
+                    tag: true
+                }
+            }
         },
 
         orderBy,

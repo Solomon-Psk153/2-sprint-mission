@@ -15,17 +15,21 @@ datasource db {
 }
 
 model User {
-  id        String         @id
-  nickname  String?
-  email     String
-  provider     String // ex: 'google', 'kakao', 'facebook', 'local'
-  providerId   String?  @unique // 해당 플랫폼의 user ID
-  idToken      String? // OIDC용 (Google, Apple 등)
-  imageUrl  String?
-  images    Image?
-  password  String?
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+  id         String   @id
+  nickname   String?
+  email      String
+  provider   String // ex: 'google', 'kakao', 'facebook', 'local'
+  providerId String?  @unique // 해당 플랫폼의 user ID
+  idToken    String? // OIDC용 (Google, Apple 등)
+  imageUrl   String?
+  images     Image?
+  password   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  products Product[]
+  articles Article[]
+  comments Comment[]
 
   @@unique(name: "emailProvider", [email, provider])
 }
@@ -35,23 +39,31 @@ model Product {
   name        String
   description String
   price       Float
-  tags        ProductTag[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+
+  comments    Comment[]
+  tags        ProductTag[]
 }
 
 model Tag {
   id          String       @id
-  name        String
+  name        String       @unique
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+
   productTags ProductTag[]
 }
 
 model ProductTag {
   id        String  @id
+
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
+
   tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId     String
 }
@@ -62,6 +74,10 @@ model Article {
   content   String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+
   comments  Comment[]
   images    Image[]
 }
@@ -75,10 +91,19 @@ model Comment {
   isDeleted Boolean   @default(false)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
   parent    Comment?  @relation("CommentToComments", fields: [parentId], references: [id], onDelete: Cascade)
   comments  Comment[] @relation("CommentToComments")
+  
   article   Article   @relation(fields: [articleId], references: [id], onDelete: Cascade)
   articleId String
+
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+
   images    Image[]
 }
 

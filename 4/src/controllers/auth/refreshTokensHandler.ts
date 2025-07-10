@@ -1,24 +1,21 @@
 import { RequestHandler } from "express";
-import { devDebug } from "../../lib/debugs";
 import { generateToken } from "../../lib/tokens";
+import { devDebug } from "../../lib/debugs";
 
-const loginHandler: RequestHandler = function (req, res, next) {
+const refreshTokensHandler:RequestHandler = function(req, res, next){
     if (!req.user) {
-        devDebug(req.user);
+        devDebug("refresh");
         res.status(401).json({ message: 'Unauthorized' });
         return;
     }
     const userId = req.user.id;
-    devDebug(userId);
     const accessToken = generateToken(userId, "accessToken");
     const refreshToken = generateToken(userId, "refreshToken");
-    res.status(200).json(
-        {
-            accessToken,
-            refreshToken,
-            message: "login success"
-        }
-    );
+
+    res.status(200).json({
+        accessToken,
+        refreshToken
+    });
 }
 
-export default loginHandler;
+export default refreshTokensHandler;

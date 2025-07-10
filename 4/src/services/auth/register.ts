@@ -8,13 +8,15 @@ const register = async function (email: string, password: string, nickname: stri
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    const userId = uuidv4();
     const user = await db.user.create({
         data: {
-            id: uuidv4(),
+            id: userId,
             nickname,
             email,
             password: hashedPassword,
-            provider: "local"
+            provider: "local",
+            providerId: userId
         },
     });
 
