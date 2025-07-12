@@ -1,8 +1,13 @@
-import { Prisma } from '../../../generated/prisma';
 import db from '../../model/prisma';
 import { v4 as uuidv4 } from 'uuid';
 
-const updateProduct = async function (productOwnId: string, name: string, description: string, price: number, tagNames?: { name: string }[]) {
+const updateProduct = async function (
+    productOwnId: string, 
+    name: string, 
+    description: string, 
+    price: number, 
+    tagNames?: { name: string }[]
+) {
     return db.$transaction(async (tx) => {
         const updatedProduct = await tx.product.update({
             where: { id: productOwnId },
@@ -39,7 +44,7 @@ const updateProduct = async function (productOwnId: string, name: string, descri
                 }
             }
 
-            const createdTags = await tx.tag.createMany({
+            const createdTags = await tx.tag.createManyAndReturn({
                 data: tagNamesArr.map(name => ({
                     id:uuidv4(),
                     name

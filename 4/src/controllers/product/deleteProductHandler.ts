@@ -8,9 +8,9 @@ const deleteProductHandler: RequestHandler = async function (req, res, next){
         res.status(401).json({ message: 'Unauthorized' });
         return;
     }
-    const id:string = req.params.id;
-    const deletedProduct = await productService.deleteProduct(id);
-    res.status(200).json(deletedProduct);
+    const productId:string = req.params.id;
+    const deletedProduct = await productService.deleteProduct(productId);
+    res.status(204).json(deletedProduct);
 }
 
 export default deleteProductHandler;

@@ -1,0 +1,30 @@
+### article list
+GET http://localhost:{{$dotenv PORT}}/article/list
+
+### article by id
+@articleId = 66544e10-0df2-4c0a-b8f0-4fa63b952df7
+GET http://localhost:{{$dotenv PORT}}/article/list/{{articleId}}
+
+### article create
+POST http://localhost:{{$dotenv PORT}}/article/create
+Content-Type: application/json; charset=UTF-8
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
+
+{
+    "title": "hello world!",
+    "content": "life is short, use python!"
+}
+
+### article update
+PATCH http://localhost:{{$dotenv PORT}}/article/update/{{articleId}}
+Content-Type: application/json; charset=UTF-8
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
+
+{
+    "title": "To C, or not to C: that is the question.",
+    "content": "life is not long, use python!"
+}
+
+### article delete
+DELETE http://localhost:{{$dotenv PORT}}/article/delete/{{articleId}}
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}

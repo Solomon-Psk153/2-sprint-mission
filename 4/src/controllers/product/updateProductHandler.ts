@@ -9,8 +9,8 @@ const updateProductHandler: RequestHandler = async function (req, res, next){
         return;
     }
     const { name, description, price, tags } = req.body;
-    const id = req.params.id;
-    const updatedProduct = await productService.updateProduct(id, name, description, price, tags);
+    const productId = req.params.id;
+    const updatedProduct = await productService.updateProduct(productId, name, description, price, tags);
     res.status(200).json(updatedProduct);
 }
 

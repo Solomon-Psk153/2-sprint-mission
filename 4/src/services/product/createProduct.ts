@@ -2,7 +2,13 @@ import { Prisma } from '../../../generated/prisma';
 import db from '../../model/prisma';
 import { v4 as uuidv4 } from 'uuid';
 
-const createProduct = async function (productUserId: string, name: string, description: string = "", price: number, tagNames?: { name: string }[]) {
+const createProduct = async function (
+    productUserId: string, 
+    name: string, 
+    description: string = "", 
+    price: number, 
+    tagNames?: { name: string }[]
+) {
     return db.$transaction(async (tx) => {
         const productId = uuidv4();
         const createdProduct = await db.product.create({

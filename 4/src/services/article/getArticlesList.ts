@@ -1,8 +1,9 @@
 import { Prisma } from '../../../generated/prisma';
-import db from '../../model/prisma';
-import { query } from '../../types/query';
+import db from "../../model/prisma";
+import {query} from '../../types/query';
 
-const getProductsList = async (query: query) => {
+const getArticlesList = async function(query: query){
+
     const orderSelects: Record<NonNullable<query['orderBy']>, Prisma.ProductOrderByWithRelationInput> = {
         'recent': { 'createdAt': 'desc' },
         'oldest': { 'createdAt': 'asc' },
@@ -14,20 +15,20 @@ const getProductsList = async (query: query) => {
     const limit = query.limit ? Number(query.limit) : 10;
     const orderBy = query.orderBy == null ? orderSelects['recent'] : orderSelects[query.orderBy];
 
-    const nameSearch = query.name;
-    const descriptionSearch = query.description;
+    const titleSearch = query.title;
+    const contentSearch = query.content;
 
-    const productsList = await db.product.findMany({
+    const articlesList = await db.article.findMany({
         where: {
-            ...(nameSearch != null && {
-                name: {
-                    contains: nameSearch,
+            ...(titleSearch != null && {
+                title: {
+                    contains: titleSearch,
                     mode: Prisma.QueryMode.insensitive
                 }
             }),
-            ...(descriptionSearch != null && {
-                description: { 
-                    contains: descriptionSearch, 
+            ...(contentSearch != null && {
+                content: { 
+                    contains: contentSearch, 
                     mode: Prisma.QueryMode.insensitive 
                 }
             })
@@ -35,15 +36,11 @@ const getProductsList = async (query: query) => {
 
         select: {
             id: true,
-            name: true,
-            price: true,
-            createdAt: true,
-            description: true,
-            tags:{
-                select:{
-                    tag: true
-                }
-            }
+            title: true,
+            content: true,
+            userId: true,
+            images:true,
+            comments: true
         },
 
         orderBy,
@@ -52,7 +49,7 @@ const getProductsList = async (query: query) => {
         take: limit
     });
 
-    return productsList;
+    return articlesList;
 };
 
-export default getProductsList;
+export default getArticlesList;

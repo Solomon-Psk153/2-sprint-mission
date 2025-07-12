@@ -6,7 +6,7 @@ import {
 
 function generateToken(userId: string, tokenType: "accessToken" | "refreshToken"){
     if(tokenType === "accessToken") return jwt.sign({ sub: userId }, JWT_ACCESS_TOKEN_SECRET, {
-        expiresIn: '1h',
+        expiresIn: '5h',
     });
     else return jwt.sign({ sub: userId }, JWT_REFRESH_TOKEN_SECRET, {
         expiresIn: '1d',

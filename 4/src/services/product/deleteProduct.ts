@@ -1,7 +1,9 @@
 import { devDebug } from '../../lib/debugs';
 import db from '../../model/prisma';
 
-const deleteProduct = async function (productOwnId: string) {
+const deleteProduct = async function (
+    productOwnId: string
+) {
     return db.$transaction(async (tx) => {
         const deletedProduct = await tx.product.delete({
             where: { id:productOwnId },

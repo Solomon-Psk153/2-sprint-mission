@@ -1,4 +1,4 @@
-import db from "../../model/prisma"
+import db from "../../model/prisma";
 
 const getProductById = async function(productOwnid: string){
     const productById = await db.product.findUniqueOrThrow({
@@ -17,6 +17,6 @@ const getProductById = async function(productOwnid: string){
     });
 
     return productById;
-}
+};
 
 export default getProductById;

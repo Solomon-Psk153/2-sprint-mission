@@ -1,26 +1,21 @@
-@port = 56000
+### product list
+GET http://localhost:{{$dotenv PORT}}/product/list
 
-GET http://localhost:{{port}}/product/list
-
-###
-
-GET http://localhost:{{port}}/product/tags
-
-###
-
+### product by id
 @productId = 54a4645e-0770-4b90-9cdf-2a66ba0bded5
-GET http://localhost:{{port}}/product/list/{{productId}}
+GET http://localhost:{{$dotenv PORT}}/product/list/{{productId}}
 
-###
+### tags list
+GET http://localhost:{{$dotenv PORT}}/product/tags
 
+### product by tag
 @productTag = psk
-GET http://localhost:{{port}}/product/tags/{{productTag}}
+GET http://localhost:{{$dotenv PORT}}/product/tags/{{productTag}}
 
-###
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDRjYzI3Yi1mZDQzLTQwYTEtOTI5NC05YmFjZDg5YzA2NjQiLCJpYXQiOjE3NTIxODY4NjgsImV4cCI6MTc1MjE5MDQ2OH0.iVkduEbzZZNvVq_wB6WS6W0fdwpdsXBek2EkyURhW-s
-POST http://localhost:{{port}}/product/create
+### product create
+POST http://localhost:{{$dotenv PORT}}/product/create
 Content-Type: application/json; charset=UTF-8
-Authorization: Bearer {{accessToken}}
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
 
 {
     "name": "psk Wooden Gloves",
@@ -33,12 +28,10 @@ Authorization: Bearer {{accessToken}}
     ]
 }
 
-###
-
-@updateProductId = 7628ec40-907b-4f4d-9633-21f3f10775ab
-PATCH http://localhost:{{port}}/product/update/{{updateProductId}}
+### product update
+PATCH http://localhost:{{$dotenv PORT}}/product/update/{{productId}}
 Content-Type: application/json; charset=UTF-8
-Authorization: Bearer {{accessToken}}
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
 
 {
     "name": "psk new Gloves",
@@ -52,8 +45,6 @@ Authorization: Bearer {{accessToken}}
     ]
 }
 
-###
-
-@deleteProductId = 7628ec40-907b-4f4d-9633-21f3f10775ab
-DELETE http://localhost:{{port}}/product/delete/{{deleteProductId}}
-Authorization: Bearer {{accessToken}}
+### product delet
+DELETE http://localhost:{{$dotenv PORT}}/product/delete/{{productId}}
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}

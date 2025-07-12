@@ -11,7 +11,7 @@ const createProductHandler: RequestHandler = async function (req, res, next) {
     const { name, description, price, tags } = req.body;
     const userId = req.user.id;
     const createdProduct = await productService.createProduct(userId, name, description, price, tags);
-    res.status(200).json(createdProduct);
+    res.status(201).json(createdProduct);
 }
 
 export default createProductHandler;
