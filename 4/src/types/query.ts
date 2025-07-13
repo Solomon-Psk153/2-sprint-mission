@@ -1,11 +1,10 @@
-interface query{
+type QueryType<T extends string> = {
     offset?: string;
     limit?: string;
-    orderBy?: "recent" | "oldest" | "highestprice" | "lowestprice";
+    orderBy?: T;
     name?: string;
     description?: string;
     title?: string;
     content?: string;
-}
-
-export {query};
+    lastCursor?: string;
+};

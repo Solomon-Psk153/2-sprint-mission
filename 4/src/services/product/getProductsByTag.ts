@@ -1,6 +1,8 @@
 import db from '../../model/prisma';
 
-const getProductsByTag = async function(tagName: string){
+const getProductsByTag = async function(
+    tagName: string
+){
     const ProductsByTag = await db.tag.findMany({
         where: { name: tagName },
         select:{

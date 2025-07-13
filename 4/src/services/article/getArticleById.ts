@@ -1,6 +1,8 @@
 import db from "../../model/prisma";
 
-const getArticleById = async function(articleOwnid: string){
+const getArticleById = async function(
+    articleOwnid: string
+){
     const articleById = await db.article.findUniqueOrThrow({
         where:{
             id: articleOwnid
@@ -11,7 +13,11 @@ const getArticleById = async function(articleOwnid: string){
             title: true,
             content: true,
             createdAt: true,
-            comments: true,
+            rootComments: {
+                select:{
+                    comment: true
+                }
+            }
         }
     });
     return articleById;

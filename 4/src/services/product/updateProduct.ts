@@ -2,7 +2,7 @@ import db from '../../model/prisma';
 import { v4 as uuidv4 } from 'uuid';
 
 const updateProduct = async function (
-    productOwnId: string, 
+    productId: string, 
     name: string, 
     description: string, 
     price: number, 
@@ -10,7 +10,7 @@ const updateProduct = async function (
 ) {
     return db.$transaction(async (tx) => {
         const updatedProduct = await tx.product.update({
-            where: { id: productOwnId },
+            where: { id: productId },
             data: {
                 name,
                 description,
@@ -24,7 +24,7 @@ const updateProduct = async function (
             const deletedTags = [];
 
             const findOwnProductTags = await tx.productTag.findMany({
-                where:{ productId: productOwnId }
+                where:{ productId: productId }
             });
 
             for(const productTag of findOwnProductTags){
@@ -59,7 +59,7 @@ const updateProduct = async function (
             await tx.productTag.createMany({
                 data:tagsAboutToMapping.map(tagObj => ({
                     id:uuidv4(),
-                    productId:productOwnId,
+                    productId:productId,
                     tagId: tagObj.id
                 }))
             });

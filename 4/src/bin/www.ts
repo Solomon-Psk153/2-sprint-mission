@@ -3,7 +3,6 @@
 import app from '../app';
 import http from 'http'
 import dotenv from 'dotenv';
-import { portType, addrType } from '../types/www';
 import { PORT } from '../lib/staticConsts';
 import { devDebug } from '../lib/debugs';
 

@@ -50,11 +50,11 @@ type commentType = {
     articleId: string;
 }
 
-export {
-    userType,
-    tagType,
-    productType,
-    productTagType,
-    articleType,
-    commentType
-};
+// export {
+//     userType,
+//     tagType,
+//     productType,
+//     productTagType,
+//     articleType,
+//     commentType
+// };

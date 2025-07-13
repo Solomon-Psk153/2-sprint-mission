@@ -1,12 +1,12 @@
 ### article list
-GET http://localhost:{{$dotenv PORT}}/article/list
+GET http://localhost:{{$dotenv PORT}}/articles
 
 ### article by id
-@articleId = 66544e10-0df2-4c0a-b8f0-4fa63b952df7
-GET http://localhost:{{$dotenv PORT}}/article/list/{{articleId}}
+@articleId = 000b00a9-d83d-47fd-8e3b-53e15d17932b
+GET http://localhost:{{$dotenv PORT}}/articles/{{articleId}}
 
 ### article create
-POST http://localhost:{{$dotenv PORT}}/article/create
+POST http://localhost:{{$dotenv PORT}}/articles/create
 Content-Type: application/json; charset=UTF-8
 Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
 
@@ -16,15 +16,17 @@ Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
 }
 
 ### article update
-PATCH http://localhost:{{$dotenv PORT}}/article/update/{{articleId}}
+@updateArticleId = 7409a77a-a920-412c-a654-fc5178299776
+PATCH http://localhost:{{$dotenv PORT}}/articles/{{updateArticleId}}/update
 Content-Type: application/json; charset=UTF-8
 Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
 
 {
-    "title": "To C, or not to C: that is the question.",
-    "content": "life is not long, use python!"
+    "title": "To C, or not to C: that is the question. hello world",
+    "content": "c is the fastest language?"
 }
 
 ### article delete
-DELETE http://localhost:{{$dotenv PORT}}/article/delete/{{articleId}}
+@deleteArticleId = 7409a77a-a920-412c-a654-fc5178299776
+DELETE http://localhost:{{$dotenv PORT}}/articles/{{deleteArticleId}}/delete
 Authorization: Bearer {{$dotenv ACCESS_TOKEN}}

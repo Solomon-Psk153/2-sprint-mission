@@ -10,14 +10,14 @@ const JWT_ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_TOKEN_SECRET!;
 const JWT_REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_TOKEN_SECRET!;
 
 // AUTH0
-const AUTH0_ISSUER_BASE_URL = process.env.AUTH0_ISSUER_BASE_URL!;
-const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID!;
-const AUTH0_SECRET = process.env.AUTH0_SECRET!;
-const AUTH0_BASE_URL = process.env.AUTH0_BASE_URL!;
+const AUTH0_ISSUER_BASE_URL = process.env.AUTH0_ISSUER_BASE_URL;
+const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
+const AUTH0_SECRET = process.env.AUTH0_SECRET;
+const AUTH0_BASE_URL = process.env.AUTH0_BASE_URL;
 
 // NAVER
-const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID!;
-const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET!;
+const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID;
+const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;
 
 export {
     NODE_ENV,

@@ -10,7 +10,7 @@ const createArticleHandler: RequestHandler = async function (req, res, next){
     }
 
     const userId = req.user.id;
-    const {title, content} = req.body;
+    const {title, content}:articleReqBody = req.body;
     const createdArticle = await articleService.createArticle(userId, title, content);
 
     res.status(201).json(createdArticle);

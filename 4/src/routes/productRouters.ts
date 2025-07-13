@@ -5,23 +5,13 @@ import passport from '../lib/passport';
 const productRouters = express.Router();
 
 productRouters.get(
-    '/list',
+    '/',
     productController.getProductListHandler
 );
 
 productRouters.get(
-    '/list/:id',
+    '/:id',
     productController.getProductByIdHandler
-);
-
-productRouters.get(
-    '/tags',
-    productController.getTagsHandler
-)
-
-productRouters.get(
-    '/tags/:name',
-    productController.getProductsByTagHandler
 );
 
 productRouters.post(
@@ -31,13 +21,13 @@ productRouters.post(
 );
 
 productRouters.patch(
-    '/update/:id',
+    '/:id/update',
     passport.authenticate('accessToken', { session: false }),
     productController.updateProductHandler
 );
 
 productRouters.delete(
-    '/delete/:id',
+    '/:id/delete',
     passport.authenticate('accessToken', { session: false }),
     productController.deleteProductHandler
 );

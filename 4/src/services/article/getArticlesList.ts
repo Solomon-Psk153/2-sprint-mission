@@ -1,32 +1,27 @@
 import { Prisma } from '../../../generated/prisma';
-import db from "../../model/prisma";
-import {query} from '../../types/query';
+import db from "../../model/prisma"
+import { articleOrderBySelector } from '../consts';
 
-const getArticlesList = async function(query: query){
-
-    const orderSelects: Record<NonNullable<query['orderBy']>, Prisma.ProductOrderByWithRelationInput> = {
-        'recent': { 'createdAt': 'desc' },
-        'oldest': { 'createdAt': 'asc' },
-        'highestprice': { 'price': 'desc' },
-        'lowestprice': { 'price': 'asc' },
-    };
+const getArticlesList = async function(
+    query: QueryType<ArticleOrderByKey>
+){
 
     const offset = query.offset ? Number(query.offset) : 0;
     const limit = query.limit ? Number(query.limit) : 10;
-    const orderBy = query.orderBy == null ? orderSelects['recent'] : orderSelects[query.orderBy];
+    const orderBy = query.orderBy == null ? articleOrderBySelector['recent'] : articleOrderBySelector[query.orderBy];
 
     const titleSearch = query.title;
     const contentSearch = query.content;
 
     const articlesList = await db.article.findMany({
         where: {
-            ...(titleSearch != null && {
+            ...(titleSearch !== undefined && {
                 title: {
                     contains: titleSearch,
                     mode: Prisma.QueryMode.insensitive
                 }
             }),
-            ...(contentSearch != null && {
+            ...(contentSearch !== undefined && {
                 content: { 
                     contains: contentSearch, 
                     mode: Prisma.QueryMode.insensitive 
@@ -39,8 +34,8 @@ const getArticlesList = async function(query: query){
             title: true,
             content: true,
             userId: true,
-            images:true,
-            comments: true
+            createdAt: true,
+            updatedAt: true
         },
 
         orderBy,

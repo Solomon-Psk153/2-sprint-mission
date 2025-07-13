@@ -1,8 +1,10 @@
 import db from "../../model/prisma";
 
-const getProductById = async function(productOwnid: string){
+const getProductById = async function(
+    productId: string
+){
     const productById = await db.product.findUniqueOrThrow({
-        where: { id:productOwnid },
+        where: { id:productId },
         select: {
             id: true,
             name:true,
@@ -12,7 +14,12 @@ const getProductById = async function(productOwnid: string){
                 select:{
                     tag:true
                 }
-            }
+            },
+            // rootComments:{
+            //     select:{
+            //         comment: true
+            //     }
+            // }
         }
     });
 

@@ -1,19 +1,12 @@
 ### product list
-GET http://localhost:{{$dotenv PORT}}/product/list
+GET http://localhost:{{$dotenv PORT}}/products
 
 ### product by id
-@productId = 54a4645e-0770-4b90-9cdf-2a66ba0bded5
-GET http://localhost:{{$dotenv PORT}}/product/list/{{productId}}
+@productId = 248e7548-5198-4cc1-a794-44d275f0b63c
+GET http://localhost:{{$dotenv PORT}}/products/{{productId}}
 
-### tags list
-GET http://localhost:{{$dotenv PORT}}/product/tags
-
-### product by tag
-@productTag = psk
-GET http://localhost:{{$dotenv PORT}}/product/tags/{{productTag}}
-
-### product create
-POST http://localhost:{{$dotenv PORT}}/product/create
+### product create1
+POST http://localhost:{{$dotenv PORT}}/products/create
 Content-Type: application/json; charset=UTF-8
 Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
 
@@ -28,8 +21,24 @@ Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
     ]
 }
 
+### product create2
+POST http://localhost:{{$dotenv PORT}}/products/create
+Content-Type: application/json; charset=UTF-8
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
+
+{
+    "name": "psk super laptop",
+    "description": "epyc cpu + 128gb, Compatible with server case",
+    "price": 18239,
+    "tags":[
+        {"name":"psk"},
+        {"name":"super"},
+        {"name":"laptop"}
+    ]
+}
+
 ### product update
-PATCH http://localhost:{{$dotenv PORT}}/product/update/{{productId}}
+PATCH http://localhost:{{$dotenv PORT}}/products/{{productId}}/update
 Content-Type: application/json; charset=UTF-8
 Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
 
@@ -46,5 +55,5 @@ Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
 }
 
 ### product delet
-DELETE http://localhost:{{$dotenv PORT}}/product/delete/{{productId}}
+DELETE http://localhost:{{$dotenv PORT}}/products/{{productId}}/delete
 Authorization: Bearer {{$dotenv ACCESS_TOKEN}}

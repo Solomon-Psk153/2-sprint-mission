@@ -4,13 +4,15 @@ import passport from '../lib/passport';
 
 const articleRouters = express.Router();
 
+// article
+
 articleRouters.get(
-    '/list',
+    '/',
     articleController.getArticlesListHandler
 );
 
 articleRouters.get(
-    '/list/:id',
+    '/:id',
     articleController.getArticleByIdHandler
 );
 
@@ -21,13 +23,13 @@ articleRouters.post(
 );
 
 articleRouters.patch(
-    '/update/:id',
+    '/:id/update',
     passport.authenticate('accessToken', { session: false }),
     articleController.updateArticleHandler
 );
 
 articleRouters.delete(
-    '/delete/:id',
+    '/:id/delete',
     passport.authenticate('accessToken', { session: false }),
     articleController.deleteArticleHandler
 );

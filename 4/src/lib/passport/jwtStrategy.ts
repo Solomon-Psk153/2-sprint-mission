@@ -12,7 +12,10 @@ const refreshTokenOptions = {
   secretOrKey: JWT_REFRESH_TOKEN_SECRET,
 };
 
-const jwtVerify: VerifyCallback = async function (payload, done) {
+const jwtVerify: VerifyCallback = async function (
+  payload, 
+  done
+) {
   try {
     const user = await db.user.findUnique({
       where: { id: payload.sub },

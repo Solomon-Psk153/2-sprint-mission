@@ -8,7 +8,11 @@ import { devDebug } from '../debugs';
 const options: IStrategyOptions = {
   usernameField: 'email'
 }
-const verify: VerifyFunction = async function (email, password, done) {
+const verify: VerifyFunction = async function (
+  email, 
+  password, 
+  done
+) {
   try {
     const user = await db.user.findUnique({
       where: {

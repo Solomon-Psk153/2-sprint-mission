@@ -2,16 +2,31 @@ import { devDebug } from '../../lib/debugs';
 import db from '../../model/prisma';
 
 const deleteProduct = async function (
-    productOwnId: string
+    productId: string
 ) {
     return db.$transaction(async (tx) => {
+
+        // 더 좋은 방법이 있는가?
+        const commentToProduct = await tx.rootCommentToProduct.findMany({
+            where: { productId }
+        });
+
+        const rootCommentIds = commentToProduct.map(obj => obj.commentId);
+
+        await tx.comment.deleteMany({
+            where:{
+                id: {in: rootCommentIds}
+            }
+        });
+
         const deletedProduct = await tx.product.delete({
-            where: { id:productOwnId },
+            where: { id:productId },
             include: {
                 tags: true
             }
         });
 
+        // tag 삭제
         const deletedTags = [];
         devDebug("deletedProduct.tags", deletedProduct.tags);
         for (const productTagObj of deletedProduct.tags) {

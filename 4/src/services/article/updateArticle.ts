@@ -4,7 +4,8 @@ const updateArticle = async function (
     articleUserId: string,
     articleOwnId: string, 
     title: string,
-    content: string) {
+    content: string
+) {
     const updatedArticle = await db.article.update({
         where:{
             id: articleOwnId,

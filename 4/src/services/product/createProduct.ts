@@ -18,7 +18,7 @@ const createProduct = async function (
                 description,
                 price,
                 userId: productUserId,
-                ...((tagNames != null && tagNames.length !== 0) && {
+                ...((tagNames !== undefined && tagNames.length !== 0) && {
                     tags: {
                         create: tagNames.map(tagNameObj => ({
                             id: uuidv4(),
