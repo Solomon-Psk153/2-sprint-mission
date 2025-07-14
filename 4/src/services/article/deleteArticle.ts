@@ -1,7 +1,7 @@
 import db from "../../model/prisma";
 
 const deleteArticle = async function (
-    articleUserId: string,
+    userId: string,
     articleId: string
 ) {
     return db.$transaction(async (tx) => {
@@ -9,18 +9,18 @@ const deleteArticle = async function (
             where: { articleId }
         });
     
+        const deletedArticle = await tx.article.delete({
+            where:{
+                id: articleId,
+                userId
+            }
+        });
+
         const commentIds = commentToArticle.map(obj => obj.commentId);
     
         await tx.comment.deleteMany({
             where:{
                 id: {in: commentIds}
-            }
-        });
-    
-        const deletedArticle = await tx.article.delete({
-            where:{
-                id: articleId,
-                userId: articleUserId
             }
         });
     

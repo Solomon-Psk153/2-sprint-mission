@@ -1,6 +1,6 @@
 import express from 'express';
 import productController from '../controllers/product/productController';
-import passport from '../lib/passport';
+import passport from '../lib/middlewares/passport';
 
 const productRouters = express.Router();
 

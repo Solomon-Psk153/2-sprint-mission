@@ -2,6 +2,7 @@ import { devDebug } from '../../lib/debugs';
 import db from '../../model/prisma';
 
 const deleteProduct = async function (
+    userId: string,
     productId: string
 ) {
     return db.$transaction(async (tx) => {
@@ -11,18 +12,21 @@ const deleteProduct = async function (
             where: { productId }
         });
 
+        const deletedProduct = await tx.product.delete({
+            where: {
+                id:productId,
+                userId
+            },
+            include: {
+                tags: true
+            }
+        });
+
         const rootCommentIds = commentToProduct.map(obj => obj.commentId);
 
         await tx.comment.deleteMany({
             where:{
                 id: {in: rootCommentIds}
-            }
-        });
-
-        const deletedProduct = await tx.product.delete({
-            where: { id:productId },
-            include: {
-                tags: true
             }
         });
 

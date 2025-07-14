@@ -2,7 +2,7 @@ import db from "../../model/prisma";
 import { v4 as uuidv4 } from "uuid";
 
 const createArticle = async function (
-    articleUserId: string,
+    userId: string,
     title: string,
     content: string
 ) {
@@ -11,7 +11,7 @@ const createArticle = async function (
             id: uuidv4(),
             title,
             content,
-            userId: articleUserId
+            userId
         }
     });
 

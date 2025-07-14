@@ -1,6 +1,6 @@
 import express from 'express';
 import authController from '../controllers/auth/authController';
-import passport from '../lib/passport';
+import passport from '../lib/middlewares/passport';
 
 const authRouters = express.Router();
 

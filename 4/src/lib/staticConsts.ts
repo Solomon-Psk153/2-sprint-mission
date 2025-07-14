@@ -5,6 +5,9 @@ dotenv.config({path:'../.env'});
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const PORT = process.env.PORT || 3000;
 
+// ENCRYPT_KEY
+const ENCRYPT_KEY = process.env.ENCRYPT_KEY!;
+
 // TOKEN
 const JWT_ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_TOKEN_SECRET!;
 const JWT_REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_TOKEN_SECRET!;
@@ -22,6 +25,8 @@ const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;
 export {
     NODE_ENV,
     PORT,
+
+    ENCRYPT_KEY,
 
     JWT_ACCESS_TOKEN_SECRET,
     JWT_REFRESH_TOKEN_SECRET,

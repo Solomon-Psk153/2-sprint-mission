@@ -23,6 +23,7 @@ POST http://localhost:{{$dotenv PORT}}/auth/logout
 ### refresh token
 POST http://localhost:{{$dotenv PORT}}/auth/refresh
 Content-Type: application/json; charset=UTF-8
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
 
 {
     "email": "cidaja7735@binafex.com",

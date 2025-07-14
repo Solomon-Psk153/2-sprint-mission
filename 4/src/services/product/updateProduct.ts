@@ -2,6 +2,7 @@ import db from '../../model/prisma';
 import { v4 as uuidv4 } from 'uuid';
 
 const updateProduct = async function (
+    userId: string,
     productId: string, 
     name: string, 
     description: string, 
@@ -10,7 +11,10 @@ const updateProduct = async function (
 ) {
     return db.$transaction(async (tx) => {
         const updatedProduct = await tx.product.update({
-            where: { id: productId },
+            where: {
+                userId, 
+                id: productId
+            },
             data: {
                 name,
                 description,

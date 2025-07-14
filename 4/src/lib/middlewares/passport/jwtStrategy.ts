@@ -1,6 +1,6 @@
 import { Strategy as JwtStrategy, ExtractJwt, VerifyCallback } from 'passport-jwt';
-import db from '../../model/prisma';
-import { JWT_ACCESS_TOKEN_SECRET,JWT_REFRESH_TOKEN_SECRET} from '../staticConsts';
+import db from '../../../model/prisma';
+import { JWT_ACCESS_TOKEN_SECRET,JWT_REFRESH_TOKEN_SECRET} from '../../staticConsts';
 
 const accessTokenOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

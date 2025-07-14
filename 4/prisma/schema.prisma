@@ -96,6 +96,7 @@ model Comment {
   replyId   String?
   title     String?
   content   String
+  userId    String
   isDeleted Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -121,11 +122,12 @@ model RootCommentToArticle {
 // 나중에 시스템이 커지면, 편할 수 있다.(업로드한 이미지 관리) 보통은 URL로 방문자에게 제공하는 것 같다.
 // 이미지는 유저 폴더를 따로 만들어서 유저 별로 모아두는 게 관리에 편하다. 그렇지 않은 경우에는 한번 생각해봐야 한다.
 model Image {
-  id        String   @id
-  mimetype  String
-  filename  String   @unique
-  path      String
-  createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String   @unique
+  id           String   @id
+  mimetype     String
+  originalname String
+  filename     String   @unique
+  path         String   @unique
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
 }

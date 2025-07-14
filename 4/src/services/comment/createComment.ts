@@ -3,6 +3,7 @@ import db from "../../model/prisma";
 import { devDebug } from "../../lib/debugs";
 
 const createComment = async function (
+    userId: string,
     whichOne: whereToLeaveComment,
     whichId: string,
     content: string,
@@ -33,6 +34,7 @@ const createComment = async function (
                 id: uuidv4(),
                 ...(title !== undefined && { title }),
                 content,
+                userId,
                 ...(parentId != null && { parent:{
                     connect:{
                         id: parentId

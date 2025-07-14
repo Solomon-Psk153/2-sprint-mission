@@ -146,3 +146,4 @@ generated/
 node_modules
 /generated/prisma
 ignore/
+uploads/

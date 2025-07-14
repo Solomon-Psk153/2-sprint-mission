@@ -1,5 +1,5 @@
 import express from 'express';
-import passport from '../lib/passport';
+import passport from '../lib/middlewares/passport';
 import commentController from '../controllers/comment/commentController';
 
 const commentRouters = express.Router();

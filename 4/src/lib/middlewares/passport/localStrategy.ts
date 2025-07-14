@@ -1,8 +1,8 @@
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcrypt';
 import type { IStrategyOptions, VerifyFunction } from 'passport-local';
-import db from '../../model/prisma';
-import { devDebug } from '../debugs';
+import db from '../../../model/prisma';
+import { devDebug } from '../../debugs';
 
 
 const options: IStrategyOptions = {

@@ -2,6 +2,7 @@ import { devDebug } from "../../lib/debugs";
 import db from "../../model/prisma";
 
 const updateComment = async function (
+    userId: string,
     // whichOne: whereToLeaveComment,
     // whichId: string,
     commentId: string,
@@ -32,7 +33,8 @@ const updateComment = async function (
 
         const updatedComment = await tx.comment.update({
             where: {
-                id: commentId
+                id: commentId,
+                userId
             },
             data: {
                 ...(title !== undefined && { title }),

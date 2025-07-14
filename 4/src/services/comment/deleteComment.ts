@@ -4,6 +4,7 @@ import db from "../../model/prisma";
 const deleteComment = async function (
     // whichOne: whereToLeaveComment,
     // whichId: string,
+    userId: string,
     commentId: string
 ) {
     return db.$transaction(async(tx) => {
@@ -30,7 +31,8 @@ const deleteComment = async function (
 
         const deletedComment = await tx.comment.delete({
             where: {
-                id: commentId
+                id: commentId,
+                userId
             }
         });
 

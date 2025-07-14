@@ -1,15 +1,15 @@
 import db from "../../model/prisma";
 
 const updateArticle = async function (
-    articleUserId: string,
-    articleOwnId: string, 
+    userId: string,
+    articleId: string, 
     title: string,
     content: string
 ) {
     const updatedArticle = await db.article.update({
         where:{
-            id: articleOwnId,
-            userId: articleUserId
+            id: articleId,
+            userId
         },
         data: {
             title,
