@@ -1,11 +1,13 @@
 import express from 'express';
 import authController from '../controllers/auth/authController';
 import passport from '../lib/middlewares/passport';
+import {validateEmail} from "../lib/middlewares/validators";
 
 const authRouters = express.Router();
 
 authRouters.post(
     '/register',
+    validateEmail,
     authController.registerHandler
 );
 

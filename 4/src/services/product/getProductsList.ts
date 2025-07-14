@@ -3,7 +3,8 @@ import db from '../../model/prisma';
 import { productOrderBySelector } from '../consts';
 
 const getProductsList = async (
-    query: QueryType<ProductOrderByKey>
+    query: QueryType<ProductOrderByKey>,
+    userId?: string
 ) => {
     
     const offset = query.offset ? Number(query.offset) : 0;
@@ -15,6 +16,9 @@ const getProductsList = async (
 
     const productsList = await db.product.findMany({
         where: {
+            ...(userId !== undefined && {
+                userId
+            }),
             ...(nameSearch !== undefined && {
                 name: {
                     contains: nameSearch,

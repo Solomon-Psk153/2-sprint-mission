@@ -19,6 +19,7 @@ imageRouters.get(
 
 imageRouters.delete(
     '/:encodedEncryptedString',
+    passport.authenticate('accessToken', { session: false }),
     imageController.imageDeleteHandler
 );
 

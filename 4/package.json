@@ -26,6 +26,7 @@
     "express": "^5.1.0",
     "express-actuator": "^1.8.4",
     "express-openid-connect": "^2.18.1",
+    "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.2.0",
     "jwt-decode": "^4.0.0",
