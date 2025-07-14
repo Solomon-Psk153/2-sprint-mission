@@ -19,14 +19,21 @@ const AUTH0_SECRET = process.env.AUTH0_SECRET;
 const AUTH0_BASE_URL = process.env.AUTH0_BASE_URL;
 
 // NAVER
-const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID;
-const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;
+const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID!;
+const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET!;
+
+// DISCORD
+const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID!;
+const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET!;
+
+const BASE_URL = process.env.BASE_URL!;
 
 export {
     NODE_ENV,
     PORT,
 
     ENCRYPT_KEY,
+    BASE_URL,
 
     JWT_ACCESS_TOKEN_SECRET,
     JWT_REFRESH_TOKEN_SECRET,
@@ -38,5 +45,8 @@ export {
 
     NAVER_CLIENT_ID,
     NAVER_CLIENT_SECRET,
+
+    DISCORD_CLIENT_ID,
+    DISCORD_CLIENT_SECRET
 
 };

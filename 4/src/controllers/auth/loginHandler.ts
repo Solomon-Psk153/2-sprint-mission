@@ -12,6 +12,7 @@ const loginHandler: RequestHandler = function (req, res, next) {
     devDebug(userId);
     const accessToken = generateToken(userId, "accessToken");
     const refreshToken = generateToken(userId, "refreshToken");
+    
     res.status(200).json(
         {
             accessToken,

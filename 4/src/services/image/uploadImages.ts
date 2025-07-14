@@ -1,5 +1,4 @@
 import db from '../../model/prisma';
-import { v4 as uuidv4 } from 'uuid';
 import { createEncryptor } from 'simple-encryptor';
 import { ENCRYPT_KEY } from '../../lib/staticConsts';
 import base64url from 'base64url';
@@ -24,7 +23,7 @@ const uploadImages = async function(
                 {
                     [filename]: await tx.image.create({
                         data:{
-                            id:uuidv4(),
+                            id:crypto.randomUUID(),
                             mimetype,
                             originalname,
                             filename,

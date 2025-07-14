@@ -11,6 +11,7 @@ const getUserInfo = async function(
         select:{
             nickname:true,
             email:true,
+            imageUrl: true
         }
     });
 

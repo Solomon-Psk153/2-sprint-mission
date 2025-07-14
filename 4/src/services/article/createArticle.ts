@@ -1,5 +1,4 @@
-import db from "../../model/prisma";
-import { v4 as uuidv4 } from "uuid";
+import db from "../../model/prisma"
 
 const createArticle = async function (
     userId: string,
@@ -8,7 +7,7 @@ const createArticle = async function (
 ) {
     const createdArticle = await db.article.create({
         data: {
-            id: uuidv4(),
+            id: crypto.randomUUID(),
             title,
             content,
             userId

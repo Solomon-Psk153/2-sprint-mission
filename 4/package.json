@@ -35,7 +35,7 @@
     "passport-discord": "^0.1.4",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
-    "passport-naver": "^1.0.6",
+    "passport-naver-v2": "^2.0.8",
     "simple-encryptor": "^4.0.0",
     "superstruct": "^2.0.2",
     "ts-node": "^10.9.2",

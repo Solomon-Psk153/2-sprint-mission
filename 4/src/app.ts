@@ -6,14 +6,19 @@ import router from './routes';
 import auth from 'express-openid-connect';
 import passport from './lib/middlewares/passport/index';
 import multer from 'multer';
-// import freeBoardRouter
-// import commentRouter
-// import imgRouter
+import morgan from 'morgan';
+import helmet from 'helmet';
+// import cookieParser from 'cookie-parser';
 
 const app = express();
+app.use(morgan('dev'));
+// app.use(cookieParser());
+app.use(express.urlencoded({extended:true}));
 app.use(cors());
 app.use(express.json());
-app.use(actuator()); // https://github.com/rcruzper/express-actuator/tree/master
+app.use(actuator()); 
+app.use(helmet());
+// https://github.com/rcruzper/express-actuator/tree/master
 app.use(passport.initialize());
 app.use(router);
 

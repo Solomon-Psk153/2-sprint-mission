@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import db from "../../model/prisma";
 import { devDebug } from "../../lib/debugs";
 
@@ -31,7 +30,7 @@ const createComment = async function (
 
         const createdComment = await tx.comment.create({
             data: {
-                id: uuidv4(),
+                id: crypto.randomUUID(),
                 ...(title !== undefined && { title }),
                 content,
                 userId,

@@ -1,7 +1,8 @@
 import express from 'express';
 import authController from '../controllers/auth/authController';
 import passport from '../lib/middlewares/passport';
-import {validateEmail} from "../lib/middlewares/validators";
+import { validateEmail } from "../lib/middlewares/validators";
+import stateValidator from '../lib/middlewares/passport/stateValidator';
 
 const authRouters = express.Router();
 
@@ -12,8 +13,34 @@ authRouters.post(
 );
 
 authRouters.post(
-    '/login',
+    '/local/login',
     passport.authenticate('local', { session: false }),
+    authController.loginHandler
+);
+
+// naver
+authRouters.get(
+    '/naver/login',
+    passport.authenticate('naver', { session: false, authType: 'reprompt' })
+);
+
+authRouters.get(
+    '/naver/callback',
+    // stateValidator,
+    passport.authenticate('naver', { session: false }),
+    authController.loginHandler,
+);
+
+// discord
+authRouters.get(
+    '/discord/login',
+    passport.authenticate('discord', { session: false })
+);
+
+authRouters.get(
+    '/discord/callback',
+    // stateValidator,
+    passport.authenticate('discord', { session: false }),
     authController.loginHandler
 );
 

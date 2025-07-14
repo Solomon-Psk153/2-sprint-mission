@@ -1,6 +1,4 @@
-import { Prisma } from '../../../generated/prisma';
 import db from '../../model/prisma';
-import { v4 as uuidv4 } from 'uuid';
 
 const createProduct = async function (
     productUserId: string, 
@@ -10,7 +8,7 @@ const createProduct = async function (
     tagNames?: { name: string }[]
 ) {
     return db.$transaction(async (tx) => {
-        const productId = uuidv4();
+        const productId = crypto.randomUUID();
         const createdProduct = await db.product.create({
             data: {
                 id: productId,
@@ -21,12 +19,12 @@ const createProduct = async function (
                 ...((tagNames !== undefined && tagNames.length !== 0) && {
                     tags: {
                         create: tagNames.map(tagNameObj => ({
-                            id: uuidv4(),
+                            id: crypto.randomUUID(),
                             tag: {
                                 connectOrCreate: {
                                     where: { name: tagNameObj.name },
                                     create: {
-                                        id: uuidv4(),
+                                        id: crypto.randomUUID(),
                                         name: tagNameObj.name
                                     }
                                 }

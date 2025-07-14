@@ -1,5 +1,4 @@
 import db from '../../model/prisma';
-import { v4 as uuidv4 } from 'uuid';
 
 const updateProduct = async function (
     userId: string,
@@ -50,7 +49,7 @@ const updateProduct = async function (
 
             const createdTags = await tx.tag.createManyAndReturn({
                 data: tagNamesArr.map(name => ({
-                    id:uuidv4(),
+                    id:crypto.randomUUID(),
                     name
                 })),
                 skipDuplicates: true
@@ -62,7 +61,7 @@ const updateProduct = async function (
 
             await tx.productTag.createMany({
                 data:tagsAboutToMapping.map(tagObj => ({
-                    id:uuidv4(),
+                    id:crypto.randomUUID(),
                     productId:productId,
                     tagId: tagObj.id
                 }))
