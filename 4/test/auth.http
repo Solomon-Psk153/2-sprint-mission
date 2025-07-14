@@ -17,9 +17,6 @@ Content-Type: application/json; charset=UTF-8
     "password": "testpassword"
 }
 
-### naver login
-GET http://localhost:{{$dotenv PORT}}/auth/naver/login
-
 ### logout
 POST http://localhost:{{$dotenv PORT}}/auth/logout
 
