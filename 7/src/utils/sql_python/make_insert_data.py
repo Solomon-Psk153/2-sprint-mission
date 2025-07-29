@@ -1,4 +1,4 @@
-# 아래는 chatgpt가 코드를 짰는데 너무 엉망이여서 나중에 갈아엎어야 할 듯 싶다.
+# 아래는 chatgpt가 코드를 짰는데 너무 엉망이여서 일부 코드는 수정했고 나중에 갈아엎어야 할 듯 싶다.
 
 from datetime import datetime, timedelta
 import random
