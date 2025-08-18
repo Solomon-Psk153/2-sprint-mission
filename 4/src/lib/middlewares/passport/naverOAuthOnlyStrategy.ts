@@ -30,7 +30,7 @@ export const naverStrategy = new NaverStrategy(
             const nickname = profile.nickname;
             const imageUrl = profile.profileImage;
 
-            if (email != null && nickname != null && imageUrl != null) {
+            if (email != null && nickname != null) {
 
                 const newUser = await db.user.create({
                     data: {

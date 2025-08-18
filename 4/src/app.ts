@@ -8,6 +8,7 @@ import passport from './lib/middlewares/passport/index';
 import multer from 'multer';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import session from 'express-session';
 // import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -16,10 +17,11 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({extended:true}));
 app.use(cors());
 app.use(express.json());
-app.use(actuator()); 
+app.use(actuator()); // https://github.com/rcruzper/express-actuator/tree/master 
 app.use(helmet());
-// https://github.com/rcruzper/express-actuator/tree/master
+app.use(session());
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(router);
 
 app.use(((_req, _res, next) => {
@@ -33,7 +35,6 @@ app.use(((err, req, res, next) => {
     if (err) {
         return res.status(500).json({ message: err.message });
     }
-    next();
 }) as ErrorRequestHandler);
 
 // app.use(((err, req, res, next) => {

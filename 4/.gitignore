@@ -141,6 +141,7 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# personal exception files
 generated/
 .DS_Store
 node_modules

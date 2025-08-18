@@ -16,13 +16,15 @@ const getRootCommentsList = async function (
         const titleSearch = query.title;
         const contentSearch = query.content;
 
-        const lastCursor = query.lastCursor
+        const lastCursor = query.lastCursor;
 
         const where = {
-            ...(whichOne === "articles" ?
-                { articleId: whichId } :
-                { productId: whichId }
-            ),
+            articleId: whichOne === 'articles' ? whichId : undefined,
+            productId: whichId,
+            // ...(whichOne === "articles" ?
+            //     { articleId: whichId } :
+            //     { productId: whichId }
+            // ),
 
             comment: {
                 AND: [
