@@ -58,3 +58,22 @@ https://kirkim.github.io/javascript/2021/09/21/redirect.html
 crypto.randomUUID()는 uuidv4보다 안전성이 높다. 
 
 discord가 계속 실패가 된다. 원인은 창이 닫아져서 실패한다고 한다.
+
+---
+
+https://betterstack.com/community/guides/scaling-nodejs/error-handling-express/#handling-errors-in-asynchronous-code
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Keywords
+https://ko.javascript.info/custom-errors
+```ts
+class AppError extends Error {
+  protected status: number;
+  
+  constructor( status: number, message: string ) {
+    super(message);
+    this.status = status;
+  }
+}
+```
+
+protected는 strict mode에서 지원되는 것이다.
+에러를 처리할 때는 위와 같이 Error를 extends해서 새로운 클래스를 만드는 식으로 작성한다.
