@@ -1,12 +1,12 @@
-import productRouters from './productRouters';
-import authRouters from './authRouters';
-import articleRouters from './articleRouters'
+import productRouters from './product.router';
+import authRouters from './auth.router';
+import articleRouters from './article.router'
 import express from 'express';
-import tagRouters from './tagRouters';
-import commentRouters from './commentRouters';
-import imagesRouters from './imagesRouters';
-import imageRouters from './imageRouters';
-import userRouters from './userRouters';
+import tagRouters from './tag.router';
+import commentRouters from './comment.router';
+import imagesRouters from './images.router';
+import imageRouters from './image.router';
+import userRouters from './user.router';
 
 const router = express.Router();
 router.use('/auth', authRouters);
