@@ -1,4 +1,3 @@
-import db from "../model/prisma";
 import * as articleService from "../repos/article.repo";
 
 // 게시글 목록 조회

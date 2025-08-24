@@ -66,28 +66,26 @@ export const update = async ({ userId, articleId, title, content }: UpdateArticl
     }
 });
 
-export const delere = async ({ userId, articleId }: deleteArticleDataType) => {
-    return db.$transaction(async (tx) => {
-        const commentToArticle = await tx.rootCommentToArticle.findMany({
-            where: { articleId }
-        });
-
-        const deletedArticle = await tx.article.delete({
-            where: {
-                id: articleId,
-                userId
-            }
-        });
-
-        const commentIds = commentToArticle.map(obj => obj.commentId);
-
-        await tx.comment.deleteMany({
-            where: {
-                id: { in: commentIds }
-            }
-        });
-
-        return deletedArticle;
+export const delere = async ({ userId, articleId }: deleteArticleDataType) => db.$transaction(async (tx) => {
+    const commentToArticle = await tx.rootCommentToArticle.findMany({
+        where: { articleId }
     });
-};
+
+    const deletedArticle = await tx.article.delete({
+        where: {
+            id: articleId,
+            userId
+        }
+    });
+
+    const commentIds = commentToArticle.map(obj => obj.commentId);
+
+    await tx.comment.deleteMany({
+        where: {
+            id: { in: commentIds }
+        }
+    });
+
+    return deletedArticle;
+});
 

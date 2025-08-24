@@ -1,6 +1,6 @@
 import express from 'express';
 import articleRouters from './article.route'
-import productRouters from './product.router';
+import productRouters from './product.route';
 import authRouters from './auth.router';
 import tagRouters from './tag.router';
 import commentRouters from './comment.router';

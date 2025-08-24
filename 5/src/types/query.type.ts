@@ -8,3 +8,9 @@ type QueryType<T extends string> = {
     content?: string;
     lastCursor?: string;
 };
+
+type PagenationType = {
+    offset: number;
+    limit: number;
+    orderBy: CreatedAtType;
+}

@@ -1,10 +1,7 @@
 type GetArticleDataType = {
     title: string;
     content: string;
-    offset: number;
-    limit: number;
-    orderBy: CreatedAtType;
-};
+} & PagenationType;
 
 type CreateArticleReqType = Pick<GetArticleDataType, "title" | "content">;
 

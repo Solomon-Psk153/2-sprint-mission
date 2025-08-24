@@ -3,10 +3,7 @@ import { InternalServerError } from './error/500.error';
 dotenv.config();
 
 const envVerify = (env: string | undefined) => {
-    if(env == null){
-        throw new InternalServerError("env not found");
-    }
-
+    if(env == null) throw new InternalServerError("env not found");
     return env;
 }
 

@@ -1,6 +1,6 @@
 import { articleOrderBy, productOrderBy } from "../enums/orderby.enum";
 
-export const articleOrderBySelector = function (orderBy: string) {
+export const articleOrderBySelector = (orderBy: string) => {
   switch (orderBy) {
     case "oldest":
       return articleOrderBy["oldest"];
@@ -11,7 +11,7 @@ export const articleOrderBySelector = function (orderBy: string) {
   }
 };
 
-export const productOrderBySelector = function (orderBy: string) {
+export const productOrderBySelector = (orderBy: string) => {
   switch (orderBy) {
     case "highestprice":
     case "lowestprice":
@@ -25,3 +25,5 @@ export const productOrderBySelector = function (orderBy: string) {
       return productOrderBy["recent"];
   }
 };
+
+export const productTagOrderBySelector = articleOrderBySelector;
