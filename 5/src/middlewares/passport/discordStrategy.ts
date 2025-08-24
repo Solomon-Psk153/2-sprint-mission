@@ -1,6 +1,6 @@
 import { Strategy as DiscordStrategy } from 'passport-discord';
-import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, PORT, BASE_URL } from '../../staticConsts';
-import db from '../../../model/prisma';
+import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, PORT, BASE_URL } from '../../utils/env.util';
+import db from '../../model/prisma';
 
 export const discordStrategy = new DiscordStrategy(
     {
@@ -8,7 +8,7 @@ export const discordStrategy = new DiscordStrategy(
         clientSecret: DISCORD_CLIENT_SECRET,
         callbackURL: `/auth/discord/callback`,
         scope: ['identify', 'email'],
-        state: true
+        // state: true
     },
     async function (
         accessToken, refreshToken, profile, done
@@ -51,5 +51,3 @@ export const discordStrategy = new DiscordStrategy(
         }
     }
 );
-
-export default discordStrategy;

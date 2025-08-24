@@ -1,11 +1,11 @@
 import passport from 'passport';
-import {accessTokenStrategy, refreshTokenStrategy} from './jwtStrategy';
-import localStrategy from './localStrategy';
-import naverStrategy from './naverOAuthOnlyStrategy';
-import discordStrategy from './discordStrategy';
+import { accessTokenStrategy, refreshTokenStrategy } from './jwtStrategy';
+import { localStrategy } from './localStrategy';
+import { naverStrategy } from './naverOAuthOnlyStrategy';
+import { discordStrategy } from './discordStrategy';
 
 passport.use(
-    'local', 
+    'local',
     localStrategy
 );
 
@@ -20,12 +20,12 @@ passport.use(
 );
 
 passport.use(
-    'naver', 
+    'naver',
     naverStrategy
 );
 
 passport.use(
-    'discord', 
+    'discord',
     discordStrategy
 );
 

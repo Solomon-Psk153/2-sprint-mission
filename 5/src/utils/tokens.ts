@@ -4,18 +4,10 @@ import {
     JWT_REFRESH_TOKEN_SECRET,
 } from './env.util';
 
-function generateToken(
-    userId: string, 
-    tokenType: "accessToken" | "refreshToken"
-){
-    if(tokenType === "accessToken") return jwt.sign({ sub: userId }, JWT_ACCESS_TOKEN_SECRET, {
-        expiresIn: '5h',
-    });
-    else return jwt.sign({ sub: userId }, JWT_REFRESH_TOKEN_SECRET, {
-        expiresIn: '1d',
-    });
-}
+export const generateAccessToken = (userId: string) => jwt.sign({ sub: userId }, JWT_ACCESS_TOKEN_SECRET, {
+    expiresIn: '5h',
+});
 
-export {
-    generateToken
-};
+export const generateRefreshToken = (userId: string) => jwt.sign({ sub: userId }, JWT_REFRESH_TOKEN_SECRET, {
+    expiresIn: '1d',
+});

@@ -2,7 +2,7 @@
 
 import { RequestHandler } from "express";
 
-const stateValidator: RequestHandler = async function (req, res, next) {
+export const stateValidator: RequestHandler = async function (req, res, next) {
     const { code, state } = req.query;
     const storedState = req.cookies.discord_oauth_state;
     if (!state || state !== storedState) {
@@ -12,5 +12,3 @@ const stateValidator: RequestHandler = async function (req, res, next) {
 
     next();
 };
-
-export default stateValidator;

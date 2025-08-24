@@ -1,6 +1,6 @@
 import { Strategy as JwtStrategy, ExtractJwt, VerifyCallback } from 'passport-jwt';
-import db from '../../../model/prisma';
-import { JWT_ACCESS_TOKEN_SECRET,JWT_REFRESH_TOKEN_SECRET} from '../../staticConsts';
+import db from '../../model/prisma';
+import { JWT_ACCESS_TOKEN_SECRET,JWT_REFRESH_TOKEN_SECRET} from '../../utils/env.util';
 
 const accessTokenOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -29,17 +29,12 @@ const jwtVerify: VerifyCallback = async function (
   }
 }
 
-const accessTokenStrategy = new JwtStrategy(
+export const accessTokenStrategy = new JwtStrategy(
   accessTokenOptions,
   jwtVerify
 );
 
-const refreshTokenStrategy = new JwtStrategy(
+export const refreshTokenStrategy = new JwtStrategy(
   refreshTokenOptions,
   jwtVerify
 );
-
-export {
-  accessTokenStrategy,
-  refreshTokenStrategy
-};

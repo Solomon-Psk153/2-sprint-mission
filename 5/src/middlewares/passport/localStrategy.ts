@@ -1,8 +1,7 @@
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcrypt';
 import type { IStrategyOptions, VerifyFunction } from 'passport-local';
-import db from '../../../model/prisma';
-import { devDebug } from '../../debugs';
+import db from '../../model/prisma';
 
 
 const options: IStrategyOptions = {
@@ -23,8 +22,7 @@ const verify: VerifyFunction = async function (
       }
     });
 
-    // user가 없거나, user가 있고 password가 있는데 비교하니까 다르다면,
-    devDebug("user", user);
+    // user가 없거나, user가 있고 password가 있는데 비교하니까 다르다면,\
     if (user == null || (user.password != null &&
       await bcrypt.compare(password, user.password) === false)
     ) {
@@ -36,6 +34,4 @@ const verify: VerifyFunction = async function (
     return done(null, false, { message: "error from prisma/db" });
   }
 };
-const localStrategy = new LocalStrategy(options, verify);
-
-export default localStrategy;
+export const localStrategy = new LocalStrategy(options, verify);
