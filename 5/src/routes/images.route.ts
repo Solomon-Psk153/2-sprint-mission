@@ -5,6 +5,7 @@ import imgUpload from '../middlewares/imageFolderCreate';
 
 const imagesRouters = express.Router();
 
+// 이미지들 업로드
 imagesRouters.post(
     '/upload',
     passport.authenticate('accessToken', { session: false }),

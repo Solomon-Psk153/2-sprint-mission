@@ -4,8 +4,8 @@ import productRouters from './product.route';
 import authRouters from './auth.router';
 import tagRouters from './tag.router';
 import commentRouters from './comment.route';
-import imagesRouters from './images.router';
-import imageRouters from './image.router';
+import imagesRouters from './images.route';
+import imageRouters from './image.route';
 import userRouters from './user.router';
 
 const router = express.Router();
