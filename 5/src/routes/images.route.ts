@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from '../middlewares/passport';
-import imageController from '../controllers/image/imageController';
+import * as imageController from '../controllers/image.controller';
 import imgUpload from '../middlewares/imageFolderCreate';
 
 const imagesRouters = express.Router();
@@ -10,7 +10,7 @@ imagesRouters.post(
     '/upload',
     passport.authenticate('accessToken', { session: false }),
     imgUpload.array('images', 10),
-    imageController.uploadImagesHanlder
+    imageController.uploadImages
 );
 
 export default imagesRouters;
