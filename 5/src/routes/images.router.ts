@@ -1,7 +1,7 @@
 import express from 'express';
-import passport from '../lib/middlewares/passport';
+import passport from '../middlewares/passport';
 import imageController from '../controllers/image/imageController';
-import imgUpload from '../lib/middlewares/imageFolderCreate';
+import imgUpload from '../middlewares/imageFolderCreate';
 
 const imagesRouters = express.Router();
 

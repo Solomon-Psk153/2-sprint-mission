@@ -27,3 +27,4 @@ export const productOrderBySelector = (orderBy: string) => {
 };
 
 export const productTagOrderBySelector = articleOrderBySelector;
+export const commentOrderBySelector = articleOrderBySelector;
