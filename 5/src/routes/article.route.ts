@@ -37,4 +37,25 @@ articleRouters.delete(
     articleController.deleteArticle
 );
 
+// 게시글 좋아요
+articleRouters.post(
+    '/:id/like',
+    passport.authenticate('accessToken', { session: false }),
+    articleController.likeArticle
+);
+
+// 게시글 좋아요 취소
+articleRouters.delete(
+    '/:id/like',
+    passport.authenticate('accessToken', { session: false }),
+    articleController.undoLikeArticle
+)
+
+// 게시글 좋아요 목록 조회
+articleRouters.get(
+    '/:id',
+    passport.authenticate('accessToken', { session: false }),
+    articleController.getLikedArticlesList
+);
+
 export default articleRouters;

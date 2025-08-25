@@ -23,5 +23,5 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   } else if (err instanceof NotImplementedError) status = 501;
   else if (err instanceof ServiceUnavailableError) status = 503;
 
-  res.status(status).json({ message })
+  res.status(status).json({ message });
 };

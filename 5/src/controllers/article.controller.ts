@@ -78,7 +78,7 @@ export const updateArticle: RequestHandler = async (req, res, next) => {
 };
 
 // 게시글 삭제
-export const deleteArticle: RequestHandler = async function (req, res, next) {
+export const deleteArticle: RequestHandler = async (req, res, next) => {
   try {
     if (req.user == null) {
       throw new UnauthorizedError("login is required");
@@ -86,8 +86,79 @@ export const deleteArticle: RequestHandler = async function (req, res, next) {
 
     const userId = req.user.id;
     const articleId = req.params.id;
-    const articleById = await articleService.deleteArticle({userId, articleId});
-    res.status(200).json(articleById);
+    const deleteByIdObj = await articleService.deleteArticle({ userId, articleId });
+    res.status(200).json(deleteByIdObj);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// 게시글 좋아요
+export const likeArticle: RequestHandler = async (req, res, next) => {
+  try {
+    if (req.user == null) {
+      throw new UnauthorizedError("login is required");
+    }
+
+    const userId = req.user.id;
+    const articleId = req.params.id;
+    const likeByIdObj = await articleService.likeArticle({ userId, articleId });
+
+    res.status(200).json(likeByIdObj);
+  } catch (err) {
+    next(err);
+  }
+}
+
+// 게시글 좋아요 취소
+export const undoLikeArticle: RequestHandler = async (req, res, next) => {
+  try {
+    if (req.user == null) {
+      throw new UnauthorizedError("login is required");
+    }
+
+    const userId = req.user.id;
+    const articleId = req.params.id;
+    const undoLikeByIdObj = await articleService.undoLikeArticle({ userId, articleId });
+
+    res.status(200).json(undoLikeByIdObj);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// 게시글 좋아요 목록
+export const getLikedArticlesList = async (req: Request<{}, {}, {}, Record<string, string>>, res: Response, next: NextFunction) => {
+  try {
+    if (req.user == null) {
+      throw new UnauthorizedError("login is required");
+    }
+
+    const userId = req.user.id;
+
+    const q = req.query;
+
+    if (q.orderby && !["recent", "oldest"].includes(q.orderby)) {
+      throw new BadRequestError("orderby must be one of: recent, oldest");
+    } else if (q.offset && Object.is(Number(q.offset), NaN) === true) {
+      throw new BadRequestError("offset must be number");
+    } else if (q.limit && Object.is(Number(q.limit), NaN) === true) {
+      throw new BadRequestError("limit must be number");
+    }
+
+    const query = {
+      title: q.title,
+      content: q.content,
+      offset: q.offset ? Number(q.offset) : 0,
+      limit: q.limit ? Number(q.limit) : 10,
+      orderBy: articleOrderBySelector(q.orderby),
+      userId
+    };
+
+    const undoLikeByIdObj = await articleService.getLikedArticlesList(query);
+
+    res.status(200).json(undoLikeByIdObj);
+
   } catch (err) {
     next(err);
   }

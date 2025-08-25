@@ -30,3 +30,21 @@ export const deleteArticle = async ({userId, articleId}:deleteArticleDataType) =
   const deletedArticleObj = await articleRepo.delere({userId, articleId});
   return deletedArticleObj;
 };
+
+// 게시글 좋아요
+export const likeArticle = async({userId, articleId}:LikeArticleDataType) => {
+  const likedArticleObj = await articleRepo.like({userId, articleId});
+  return likedArticleObj;
+};
+
+// 게시글 좋아요 취소
+export const undoLikeArticle = async({userId, articleId}: UndoLikeArticleDataType) => {
+  const undoLikedArticleObj = await articleRepo.undoLike({userId, articleId});
+  return undoLikedArticleObj;
+}
+
+// 게시글 좋아요 목록
+export const getLikedArticlesList = async({title, content, offset, limit, orderBy, userId}: GetLikedArticleDataType) => {
+  const getLikedArticlesListObj = await articleRepo.findAllByLike({title, content, offset, limit, orderBy, userId});
+  return getLikedArticlesListObj;
+}
