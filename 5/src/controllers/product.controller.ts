@@ -16,12 +16,15 @@ export const getProductList = async (req: Request<{}, {}, {}, Record<string, str
       throw new BadRequestError("limit must be number");
     }
 
+    const userId = req.user ? req.user.id : undefined;
+
     const query = {
       name: q.name,
       description: q.description,
       offset: q.offset ? Number(q.offset) : 0,
       limit: q.limit ? Number(q.limit) : 10,
-      orderBy: productOrderBySelector(q.orderby)
+      orderBy: productOrderBySelector(q.orderby),
+      userId
     };
 
     const productsListObj = await productService.getProductsList(query);
@@ -34,8 +37,10 @@ export const getProductList = async (req: Request<{}, {}, {}, Record<string, str
 // 상품 상세 조회
 export const getProductById: RequestHandler = async (req, res, next) => {
   try {
-    const productId: string = req.params.id;
-    const productByIdObj = await productService.getProductById(productId);
+    const productId = req.params.id;
+    const userId = req.user ? req.user.id : undefined;
+
+    const productByIdObj = await productService.getProductById({userId, productId});
     res.status(200).json(productByIdObj);
   } catch (err) {
     next(err);
@@ -58,11 +63,14 @@ export const getProductsByTag = async (req: Request<{ [key: string]: string; }, 
 
     const tagName: string = req.params.name;
 
+    const userId = req.user ? req.user.id : undefined;
+
     const query = {
       tagName,
       offset: q.offset ? Number(q.offset) : 0,
       limit: q.limit ? Number(q.limit) : 10,
-      orderBy: productTagOrderBySelector(q.orderby)
+      orderBy: productTagOrderBySelector(q.orderby),
+      userId
     };
 
     const productsByTagObj = await productService.getProductsByTag(query);

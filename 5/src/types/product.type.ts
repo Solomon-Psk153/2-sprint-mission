@@ -13,6 +13,8 @@ type GetProductDataType = Modify<PagenationType, {
   userId?: string;
 }>;
 
+type GetProductByIdQueryDataType = Optional<LikeProductDataType, "userId">;
+
 type GetProductDataWithTagType = Modify<Omit<GetProductDataType, "name" | "description">, {
   tagName: string;
   orderBy: CreatedAtType;

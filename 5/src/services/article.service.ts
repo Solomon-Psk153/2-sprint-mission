@@ -1,15 +1,32 @@
 import * as articleRepo from "../repos/article.repo";
+import { isLikedToArticle } from "../utils/isLiked-2-obj.type";
 
 // 게시글 목록 조회
-export const getArticlesList = async ({ title, content, offset, limit, orderBy }: GetArticleDataType) => {
+export const getArticlesList = async ({ title, content, offset, limit, orderBy, userId }: GetArticleDataType) => {
 
   const articlesListObj = await articleRepo.findAll({ title, content, offset, limit, orderBy });
+
+  if(userId){
+    return articlesListObj.map(async (article) => {
+      const articleId = article.id;
+      const isLiked = await isLikedToArticle({userId, articleId});
+      return {...article, isLiked};
+    });
+  }
+
   return articlesListObj;
 };
 
 // 게시글 상세 조회
-export const getArticleById = async (articleId: string) => {
+export const getArticleById = async ({userId, articleId}: GetArticleByIdQueryDataType) => {
   const articleByIdObj = await articleRepo.findById(articleId);
+
+  if(userId){
+    const articleId = articleByIdObj.id;
+    const isLiked = await isLikedToArticle({userId, articleId});
+    return {...articleByIdObj, isLiked};
+  }
+  
   return articleByIdObj;
 };
 

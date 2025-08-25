@@ -1,7 +1,10 @@
 type GetArticleDataType = {
     title: string;
     content: string;
+    userId?: string;
 } & PagenationType;
+
+type GetArticleByIdQueryDataType = Optional<DeleteArticleDataType, "userId">;
 
 type CreateArticleReqType = Pick<GetArticleDataType, "title" | "content">;
 

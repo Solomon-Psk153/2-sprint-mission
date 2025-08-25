@@ -1,9 +1,8 @@
 import db from "../utils/prisma.util";
 
 // 상품 목록 조회(userId는 추후에 사용될 것으로 현재는 undefined 상태)
-export const findAll = async ({ name, description, offset, limit, orderBy, userId }: GetProductDataType) => await db.product.findMany({
+export const findAll = async ({ name, description, offset, limit, orderBy }: GetProductDataType) => await db.product.findMany({
   where: {
-    userId,
     name: name ? {
       contains: name,
       mode: "insensitive"
@@ -55,24 +54,22 @@ export const findById = async (productId: string) => await db.product.findUnique
 });
 
 // 태그로 상품 목록 조회
-export const findAllByTag = async ({ tagName, offset, limit, orderBy, userId }: GetProductDataWithTagType) => await db.tag.findMany({
+export const findAllByTag = async ({ tagName, offset, limit, orderBy, userId }: GetProductDataWithTagType) => await db.product.findMany({
   where: {
-    name: tagName,
-    productTags: {
+    tags: {
       some: {
-        product: {
-          userId: {
-            equals: userId
-          }
+        tag: {
+          name: tagName
         }
       }
-    }
+    },
+    userId
   },
 
-  select: {
-    productTags: {
-      select: {
-        product: true
+  include:{
+    tags:{
+      select:{
+        tag: true
       }
     }
   },
@@ -81,6 +78,7 @@ export const findAllByTag = async ({ tagName, offset, limit, orderBy, userId }: 
 
   skip: offset,
   take: limit
+
 });
 
 // 상품 태그 목록 조회
@@ -206,7 +204,7 @@ export const update = async ({ userId, productId, name, description, price, tagN
 });
 
 // 상품 삭제
-export const delere = async({userId, productId}:DeleteProductDataType) => db.$transaction(async (tx) => {
+export const delere = async ({ userId, productId }: DeleteProductDataType) => db.$transaction(async (tx) => {
 
   // 더 좋은 방법이 있는가?
   const commentToProduct = await tx.rootCommentToProduct.findMany({
@@ -254,7 +252,7 @@ export const delere = async({userId, productId}:DeleteProductDataType) => db.$tr
 });
 
 // 상품 좋아요
-export const like = async({userId, productId}: LikeProductDataType) => db.$transaction(async(tx) => {
+export const like = async ({ userId, productId }: LikeProductDataType) => db.$transaction(async (tx) => {
   const likedProductObj = await tx.productLike.create({
     data: {
       id: crypto.randomUUID(),
@@ -264,11 +262,11 @@ export const like = async({userId, productId}: LikeProductDataType) => db.$trans
   });
 
   await tx.product.update({
-    where:{
+    where: {
       id: productId
     },
-    data:{
-      likeCnt:{
+    data: {
+      likeCnt: {
         increment: 1
       }
     }
@@ -278,10 +276,10 @@ export const like = async({userId, productId}: LikeProductDataType) => db.$trans
 });
 
 // 상품 좋아요 취소
-export const undoLike = async({userId, productId}: UndoLikeProductDataType) => db.$transaction(async(tx) => {
+export const undoLike = async ({ userId, productId }: UndoLikeProductDataType) => db.$transaction(async (tx) => {
   const undoLikeProductObj = await tx.productLike.delete({
-    where:{
-      productUser:{
+    where: {
+      productUser: {
         productId,
         userId
       }
@@ -289,13 +287,13 @@ export const undoLike = async({userId, productId}: UndoLikeProductDataType) => d
   });
 
   await tx.product.update({
-    where:{
+    where: {
       id: productId
     },
 
-    data:{
-      likeCnt:{
-        decrement:1
+    data: {
+      likeCnt: {
+        decrement: 1
       }
     }
   });
@@ -304,7 +302,7 @@ export const undoLike = async({userId, productId}: UndoLikeProductDataType) => d
 });
 
 // 상품 좋아요 목록
-export const findAllByLike = async({name, description, offset, limit, orderBy, userId}: GetLikedProductDataType) => await db.product.findMany({
+export const findAllByLike = async ({ name, description, offset, limit, orderBy, userId }: GetLikedProductDataType) => await db.product.findMany({
   where: {
     userId,
     name: name ? {
@@ -317,9 +315,9 @@ export const findAllByLike = async({name, description, offset, limit, orderBy, u
     } : undefined
   },
 
-  select:{
-    productLikes:{
-      where:{
+  select: {
+    productLikes: {
+      where: {
         userId
       }
     }
@@ -330,3 +328,12 @@ export const findAllByLike = async({name, description, offset, limit, orderBy, u
   skip: offset,
   take: limit
 });
+
+export const isLiked = async ({ userId, productId }: LikeProductDataType) => await db.productLike.findUnique({
+  where: {
+    productUser: {
+      productId,
+      userId
+    }
+  }
+}) !== null;

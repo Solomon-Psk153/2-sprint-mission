@@ -1,21 +1,45 @@
 import * as productRepo from "../repos/product.repo";
+import { isLikedProduct } from "../utils/isLiked-2-obj.type";
 
 // 상품 목록 조회(userId는 추후에 사용될 것으로 현재는 undefined 상태)
 export const getProductsList = async ({ name, description, offset, limit, orderBy, userId }: GetProductDataType) => {
-  const productsListObj = await productRepo.findAll({ name, description, offset, limit, orderBy, userId });
+  const productsListObj = await productRepo.findAll({ name, description, offset, limit, orderBy });
+  if(userId) {
+    return productsListObj.map(async (product) => {
+      const productId = product.id;
+      const isLiked = await isLikedProduct({userId, productId});
+      return {...product, isLiked};
+    });
+  }
+  
   return productsListObj;
 };
 
 // 상품 상세 조회
-export const getProductById = async (productId: string) => {
-  const productByIdObj = productRepo.findById(productId);
+export const getProductById = async ({userId, productId}: GetProductByIdQueryDataType) => {
+  const productByIdObj = await productRepo.findById(productId);
+
+  if(userId){
+    const productId = productByIdObj.id;
+    const isLiked = await isLikedProduct({userId, productId});
+    return {...productByIdObj, isLiked};
+  }
+
   return productByIdObj;
 };
 
 // 태그로 상품 목록 조회
-export const getProductsByTag = async ({ tagName, offset, limit, orderBy }: GetProductDataWithTagType) => {
-  const ProductsByTagObj = await productRepo.findAllByTag({ tagName, offset, limit, orderBy });
-  return ProductsByTagObj;
+export const getProductsByTag = async ({ tagName, offset, limit, orderBy, userId }: GetProductDataWithTagType) => {
+  const productsByTagObj = await productRepo.findAllByTag({ tagName, offset, limit, orderBy });
+
+  if(userId){
+    productsByTagObj.map(async (product) => {
+      const productId = product.id;
+      const isLiked = await isLikedProduct({userId, productId});
+      return {...product, isLiked};
+    });
+  }
+  return productsByTagObj;
 };
 
 // 상품 태그 목록 조회
@@ -43,19 +67,19 @@ export const deleteProduct = async ({ userId, productId }: DeleteProductDataType
 };
 
 // 상품 좋아요
-export const likeProduct = async({ userId, productId }: LikeProductDataType) => {
-  const likedProductObj = await productRepo.like({userId, productId});
+export const likeProduct = async ({ userId, productId }: LikeProductDataType) => {
+  const likedProductObj = await productRepo.like({ userId, productId });
   return likedProductObj;
 };
 
 // 상품 좋아요 취소
-export const undoLikeProduct = async({ userId, productId }: UndoLikeProductDataType) => {
-  const undoLikedProductObj = await productRepo.undoLike({userId, productId});
+export const undoLikeProduct = async ({ userId, productId }: UndoLikeProductDataType) => {
+  const undoLikedProductObj = await productRepo.undoLike({ userId, productId });
   return undoLikedProductObj;
 };
 
 // 상품 좋아요 목록
-export const getLikedProductsList = async({name, description, offset, limit, orderBy, userId}: GetLikedProductDataType) => {
-  const getLikedProductsListObj = await productRepo.findAllByLike({name, description, offset, limit, orderBy, userId});
+export const getLikedProductsList = async ({ name, description, offset, limit, orderBy, userId }: GetLikedProductDataType) => {
+  const getLikedProductsListObj = await productRepo.findAllByLike({ name, description, offset, limit, orderBy, userId });
   return getLikedProductsListObj;
 }

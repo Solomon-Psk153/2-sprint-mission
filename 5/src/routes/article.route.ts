@@ -1,18 +1,21 @@
 import express from 'express';
 import * as articleController from '../controllers/article.controller';
 import passport from '../middlewares/passport';
+import { optionalAuth } from '../middlewares/passport/optionalAuth';
 
 const articleRouters = express.Router();
 
 // 게시글 목록 조회
 articleRouters.get(
     '/',
+    optionalAuth,
     articleController.getArticlesList
 );
 
 // 게시글 상세 조회
 articleRouters.get(
     '/:id',
+    optionalAuth,
     articleController.getArticleById
 );
 

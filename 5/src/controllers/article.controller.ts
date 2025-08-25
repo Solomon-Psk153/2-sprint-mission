@@ -16,12 +16,15 @@ export const getArticlesList = async (req: Request<{}, {}, {}, Record<string, st
       throw new BadRequestError("limit must be number");
     }
 
+    const userId = req.user ? req.user.id : undefined;
+
     const query = {
       title: q.title,
       content: q.content,
       offset: q.offset ? Number(q.offset) : 0,
       limit: q.limit ? Number(q.limit) : 10,
-      orderBy: articleOrderBySelector(q.orderby)
+      orderBy: articleOrderBySelector(q.orderby),
+      userId
     };
 
     const articlesListObj = await articleService.getArticlesList(query);
@@ -35,7 +38,9 @@ export const getArticlesList = async (req: Request<{}, {}, {}, Record<string, st
 export const getArticleById: RequestHandler = async (req, res, next) => {
   try {
     const articleId = req.params.id;
-    const articleByIdObj = await articleService.getArticleById(articleId);
+    const userId = req.user ? req.user.id : undefined;
+
+    const articleByIdObj = await articleService.getArticleById({userId, articleId});
     res.status(200).json(articleByIdObj);
   } catch (err) {
     next(err);

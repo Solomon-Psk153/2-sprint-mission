@@ -1,24 +1,28 @@
 import express from 'express';
 import * as productController from '../controllers/product.controller';
 import passport from '../middlewares/passport';
+import { optionalAuth } from '../middlewares/passport/optionalAuth';
 
 const productRouters = express.Router();
 
 // 상품 목록 조회
 productRouters.get(
     '/',
+    optionalAuth,
     productController.getProductList
 );
 
 // 상품 상세 조회
 productRouters.get(
     '/:id',
+    optionalAuth,
     productController.getProductById
 );
 
 // 태그로 상품 목록 조회
 productRouters.get(
     '/:name',
+    optionalAuth,
     productController.getProductsByTag
 );
 

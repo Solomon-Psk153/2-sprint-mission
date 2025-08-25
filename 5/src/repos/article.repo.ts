@@ -1,5 +1,6 @@
 import db from "../utils/prisma.util";
 
+// 게시글 목록 조회
 export const findAll = async ({ title, content, offset, limit, orderBy }: GetArticleDataType) => await db.article.findMany({
   where: {
     title: title ? {
@@ -28,6 +29,7 @@ export const findAll = async ({ title, content, offset, limit, orderBy }: GetArt
   take: limit
 });
 
+// 게시글 상세 조회
 export const findById = async (articleId: string) => await db.article.findUniqueOrThrow({
   where: {
     id: articleId
@@ -46,6 +48,7 @@ export const findById = async (articleId: string) => await db.article.findUnique
   }
 });
 
+// 게시글 등록
 export const create = async ({ userId, title, content }: CreateArticleDataType) => await db.article.create({
   data: {
     id: crypto.randomUUID(),
@@ -55,6 +58,7 @@ export const create = async ({ userId, title, content }: CreateArticleDataType) 
   }
 });
 
+// 게시글 수정
 export const update = async ({ userId, articleId, title, content }: UpdateArticleDataType) => await db.article.update({
   where: {
     id: articleId,
@@ -66,6 +70,7 @@ export const update = async ({ userId, articleId, title, content }: UpdateArticl
   }
 });
 
+// 게시글 삭제
 export const delere = async ({ userId, articleId }: DeleteArticleDataType) => db.$transaction(async (tx) => {
   const commentToArticle = await tx.rootCommentToArticle.findMany({
     where: { articleId }
@@ -168,3 +173,12 @@ export const findAllByLike = async ({ title, content, offset, limit, orderBy, us
   take: limit
 
 });
+
+export const isLiked = async ({ userId, articleId }: LikeArticleDataType) => await db.articleLike.findUnique({
+  where: {
+    articleUser: {
+      articleId,
+      userId
+    }
+  }
+}) !== null;
