@@ -1,0 +1,18 @@
+// model User {
+//   id         String   @id
+//   nickname   String?
+//   email      String
+//   provider   String // ex: 'google', 'kakao', 'facebook', 'local'
+//   providerId String?  @unique // 해당 플랫폼의 user ID
+//   idToken    String? // OIDC용 (Google, Apple 등)
+//   password   String?
+//   createdAt  DateTime @default(now())
+//   updatedAt  DateTime @updatedAt
+//   imageUrl   String?
+
+//   products Product[]
+//   articles Article[]
+//   images   Image[]
+
+//   @@unique(name: "emailProvider", [email, provider])
+// }

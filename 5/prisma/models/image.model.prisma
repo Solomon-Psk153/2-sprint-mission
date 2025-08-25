@@ -1,0 +1,12 @@
+model Image {
+  id           String   @id
+  mimetype     String
+  originalname String
+  filename     String   @unique
+  path         String   @unique
+  createdAt    DateTime @default(now()) @map("created_at")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String @map("user_id")
+  
+  @@map("images")
+}

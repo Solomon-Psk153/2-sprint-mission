@@ -1,0 +1,17 @@
+// model Comment {
+//   id        String   @id
+//   parentId  String?
+//   replyId   String?
+//   title     String?
+//   content   String
+//   userId    String
+//   isDeleted Boolean  @default(false)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   parent   Comment?  @relation("CommentToComments", fields: [parentId], references: [id], onDelete: Cascade)
+//   comments Comment[] @relation("CommentToComments")
+
+//   rootCommentsOfArticle RootCommentToArticle[]
+//   rootCommentsOfProduct RootCommentToProduct[]
+// }
