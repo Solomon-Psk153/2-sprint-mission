@@ -1,6 +1,6 @@
 import { Strategy as DiscordStrategy } from 'passport-discord';
-import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, PORT, BASE_URL } from '../../utils/env.util';
-import db from '../../model/prisma';
+import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, PORT } from '../../utils/env.util';
+import db from '../../utils/prisma.util';
 
 export const discordStrategy = new DiscordStrategy(
     {

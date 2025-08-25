@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon --watch src --exec DEBUG=development ts-node src/bin/www.ts",
+    "dev": "nodemon --watch src --exec ts-node src/bin/www.ts",
     "seed": "ts-node src/bin/seeding.ts",
     "migrate": "npx prisma migrate dev && npx prisma generate",
     "reset": "npx prisma migrate reset && npx prisma generate",
@@ -12,7 +12,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Solomon-Psk153",
+  "prisma": {
+    "schema": "./prisma"
+  },
   "license": "ISC",
   "description": "",
   "dependencies": {
@@ -56,7 +59,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/multer": "^2.0.0",
-    "@types/node": "^24.0.10",
+    "@types/node": "^24.3.0",
     "@types/passport": "^1.0.17",
     "@types/passport-discord": "^0.1.14",
     "@types/passport-jwt": "^4.0.1",

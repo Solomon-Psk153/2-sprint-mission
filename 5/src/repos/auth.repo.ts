@@ -1,4 +1,4 @@
-import db from "../model/prisma";
+import db from "../utils/prisma.util";
 
 // 회원가입
 export const create = async({email, hashedPassword, nickname, userId}: RegisterQueryType) => await db.user.create({

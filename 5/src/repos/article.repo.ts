@@ -1,4 +1,4 @@
-import db from "../model/prisma";
+import db from "../utils/prisma.util";
 
 export const findAll = async ({ title, content, offset, limit, orderBy }: GetArticleDataType) => await db.article.findMany({
     where: {

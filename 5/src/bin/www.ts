@@ -3,14 +3,13 @@
 import app from '../app';
 import http from 'http'
 import dotenv from 'dotenv';
-import { PORT } from '../lib/staticConsts';
-import { devDebug } from '../lib/debugs';
+import { PORT } from '../utils/env.util';
 
 dotenv.config({ path: '../.env' });
 
 // port setting
-const port: portType =
-    (function (val: string | number) {
+const port =
+    (function (val: string | number):PortReturnType {
         let port: number = Number(val);
 
         // named pipe
@@ -55,10 +54,9 @@ const onError = function (
  */
 
 const onListening = function (): void {
-    const addr: addrType = server.address();
+    const addr: ServerAddressType = server.address();
     if (addr != null) {
         const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
-        devDebug('Listening on ' + bind);
     }
 }
 
@@ -70,8 +68,5 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 process.on('SIGTERM', () => {
-    devDebug('SIGTERM signal received: closing HTTP server');
-    server.close(() => {
-        devDebug('HTTP server closed')
-    });
+    server.close(() => {});
 });

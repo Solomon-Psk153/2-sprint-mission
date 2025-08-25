@@ -2,7 +2,7 @@ import express from 'express';
 import articleRouters from './article.route'
 import productRouters from './product.route';
 import authRouters from './auth.route';
-import tagRouters from './tag.router';
+import tagRouters from './tag.route';
 import commentRouters from './comment.route';
 import imagesRouters from './images.route';
 import imageRouters from './image.route';

@@ -77,3 +77,17 @@ class AppError extends Error {
 
 protected는 strict mode에서 지원되는 것이다.
 에러를 처리할 때는 위와 같이 Error를 extends해서 새로운 클래스를 만드는 식으로 작성한다.
+
+---
+https://github.com/prisma/prisma/releases/tag/6.7.0
+https://www.prisma.io/docs/orm/prisma-schema/overview/location#multi-file-prisma-schema
+
+prisma 폴더에 models를 활용하면, part를 붙이지 않아도 된다.
+
+https://github.com/pi0/config-dir
+.config를 설정하면 좋다고 한다.
+
+---
+typedSQL도 도입되었다고 한다. 5.19.0
+https://www.reddit.com/r/node/comments/1fhso6x/whats_everyones_opinion_of_prismas_typedsql_update/?tl=ko
+

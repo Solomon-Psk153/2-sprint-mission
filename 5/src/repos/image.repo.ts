@@ -1,7 +1,4 @@
-import { createEncryptor } from "simple-encryptor";
-import db from "../model/prisma";
-import { ENCRYPT_KEY } from "../utils/env.util";
-import base64url from "base64url";
+import db from "../utils/prisma.util";
 
 // 이미지 제공하기
 export const findImage = async (encodedEncryptedString: string) => await db.image.findUniqueOrThrow({

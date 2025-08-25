@@ -1,4 +1,4 @@
-import db from "../model/prisma";
+import db from "../utils/prisma.util";
 
 // 루트 댓글 리스트 가져오기
 export const findAllRoot = async ({ whichId, kind, title, content, lastCursor, limit, orderBy }: GetRootCommentsListQueryType) => db.$transaction(async (tx) => {

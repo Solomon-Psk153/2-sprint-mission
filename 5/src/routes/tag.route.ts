@@ -1,15 +1,15 @@
 import express from 'express';
-import productController from '../controllers/product/productController';
+import * as productController from '../controllers/product.controller';
 
 const tagRouters = express.Router();
 tagRouters.get(
     '/',
-    productController.getTagsHandler
+    productController.getTags
 )
 
 tagRouters.get(
     '/:name',
-    productController.getProductsByTagHandler
+    productController.getProductsByTag
 );
 
 export default tagRouters;

@@ -1,4 +1,4 @@
-import db from "../model/prisma";
+import db from "../utils/prisma.util";
 
 // 유저 정보 조회
 export const findById = async (userId: string) => await db.user.findUniqueOrThrow({

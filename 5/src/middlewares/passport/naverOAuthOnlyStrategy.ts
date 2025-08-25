@@ -1,6 +1,6 @@
 import { Strategy as NaverStrategy, Profile as NaverProfile } from 'passport-naver-v2';
-import { NAVER_CLIENT_ID, NAVER_CLIENT_SECRET, PORT, BASE_URL } from '../../utils/env.util';
-import db from '../../model/prisma';
+import { NAVER_CLIENT_ID, NAVER_CLIENT_SECRET, PORT } from '../../utils/env.util';
+import db from '../../utils/prisma.util';
 
 export const naverStrategy = new NaverStrategy(
     {

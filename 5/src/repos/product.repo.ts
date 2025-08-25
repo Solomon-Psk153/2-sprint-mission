@@ -1,4 +1,4 @@
-import db from "../model/prisma";
+import db from "../utils/prisma.util";
 
 // 상품 목록 조회(userId는 추후에 사용될 것으로 현재는 undefined 상태)
 export const findAll = async ({ name, description, offset, limit, orderBy, userId }: GetProductDataType) => await db.product.findMany({

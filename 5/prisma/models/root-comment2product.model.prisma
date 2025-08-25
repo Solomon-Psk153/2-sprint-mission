@@ -1,0 +1,10 @@
+// model RootCommentToProduct {
+//   productId String
+//   commentId String
+
+//   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+//   comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+//   @@id([productId, commentId])
+// }
