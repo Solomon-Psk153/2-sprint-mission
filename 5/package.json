@@ -13,9 +13,6 @@
   },
   "keywords": [],
   "author": "Solomon-Psk153",
-  "prisma": {
-    "schema": "./prisma"
-  },
   "license": "ISC",
   "description": "",
   "dependencies": {

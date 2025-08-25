@@ -1,10 +1,10 @@
-// model Image {
-//   id           String   @id
-//   mimetype     String
-//   originalname String
-//   filename     String   @unique
-//   path         String   @unique
-//   createdAt    DateTime @default(now())
-//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   userId       String
-// }
+model Image {
+  id           String   @id
+  mimetype     String
+  originalname String
+  filename     String   @unique
+  path         String   @unique
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+}

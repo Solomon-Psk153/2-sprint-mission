@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 // app.use(cookieParser());
 app.use(express.urlencoded({extended:true}));
-app.use(actuator()); // https://github.com/rcruzper/express-actuator/tree/master 
+app.use(actuator());
 app.use(helmet());
 app.use(session({
     name: "pskapp.sid",
