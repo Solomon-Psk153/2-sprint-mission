@@ -31,6 +31,7 @@ model User {
   images       Image[]
   productLikes ProductLike[]
   articleLikes ArticleLike[]
+  notifications Notification[]
 
   @@unique(name: "emailProvider", [email, provider])
   @@map("users")
@@ -167,6 +168,20 @@ model RootCommentToArticle {
 
   @@id([articleId, commentId])
   @@map("root_comments_to_article")
+}
+
+model Notification{
+  id String @id
+  type String
+  message String
+  isRead Boolean @map("is_read") @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  userId String @map("user_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
 }
 
 // 나중에 시스템이 커지면, 편할 수 있다.(업로드한 이미지 관리) 보통은 URL로 방문자에게 제공하는 것 같다.

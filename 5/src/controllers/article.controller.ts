@@ -107,9 +107,14 @@ export const likeArticle: RequestHandler = async (req, res, next) => {
 
     const userId = req.user.id;
     const articleId = req.params.id;
-    const likeByIdObj = await articleService.likeArticle({ userId, articleId });
+    const likeAndNotifyObj = await articleService.likeArticle({ userId, articleId });
 
-    res.status(200).json(likeByIdObj);
+    res.app.get('io').to(`user:${userId}`).emit('notification', {
+      type: likeAndNotifyObj.notificationObj.type,
+      message: likeAndNotifyObj.notificationObj.message,
+    });
+
+    res.status(200).json(likeAndNotifyObj);
   } catch (err) {
     next(err);
   }

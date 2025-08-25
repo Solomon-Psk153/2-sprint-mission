@@ -110,3 +110,6 @@ https://github.com/pi0/config-dir
 typedSQL도 도입되었다고 한다. 5.19.0 하지만, 해당 필드가 존재하지 않는다. 
 https://www.reddit.com/r/node/comments/1fhso6x/whats_everyones_opinion_of_prismas_typedsql_update/?tl=ko
 
+---
+https://stackoverflow.com/questions/42198973/does-it-need-to-socket-leave-a-room-on-disconnect-in-socket-io
+socket은 끊어지면 room에서 leave할 필요는 없다.

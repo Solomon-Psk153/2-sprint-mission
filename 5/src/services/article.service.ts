@@ -1,5 +1,7 @@
 import * as articleRepo from "../repos/article.repo";
+import * as notifyRepo from "../repos/notification.repo";
 import { isLikedToArticle } from "../utils/isLiked-2-obj.type";
+import db from "../utils/prisma.util";
 
 // 게시글 목록 조회
 export const getArticlesList = async ({ title, content, offset, limit, orderBy, userId }: GetArticleDataType) => {
@@ -49,10 +51,18 @@ export const deleteArticle = async ({userId, articleId}:DeleteArticleDataType) =
 };
 
 // 게시글 좋아요
-export const likeArticle = async({userId, articleId}:LikeArticleDataType) => {
+export const likeArticle = async({userId, articleId}:LikeArticleDataType) => db.$transaction(async(tx) =>{
   const likedArticleObj = await articleRepo.like({userId, articleId});
-  return likedArticleObj;
-};
+
+  const query = {
+    type: "like",
+    message: `${userId}가 게시글에 좋아요를 눌렀어요`,
+    userId
+  };
+
+  const notificationObj = await notifyRepo.create(query);
+  return {likedArticleObj, notificationObj};
+});
 
 // 게시글 좋아요 취소
 export const undoLikeArticle = async({userId, articleId}: UndoLikeArticleDataType) => {

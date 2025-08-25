@@ -4,12 +4,13 @@ import app from '../app';
 import http from 'http'
 import dotenv from 'dotenv';
 import { PORT } from '../utils/env.util';
+import { initSocket } from '../socket';
 
 dotenv.config({ path: '../.env' });
 
 // port setting
 const port =
-    (function (val: string | number):PortReturnType {
+    (function (val: string | number): PortReturnType {
         let port: number = Number(val);
 
         // named pipe
@@ -20,8 +21,6 @@ const port =
 
         return false;
     }(PORT));
-
-app.set('port', port);
 
 const onError = function (
     error: NodeJS.ErrnoException
@@ -47,7 +46,7 @@ const onError = function (
         default:
             throw error;
     }
-}
+};
 
 /**
  * Event listener for HTTP server "listening" event.
@@ -58,15 +57,20 @@ const onListening = function (): void {
     if (addr != null) {
         const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
     }
-}
+};
 
+app.set('port', port);
 const server = http.createServer(app);
+const io = initSocket(server);
+app.set('io', io);
 
-server.listen(port, () => { console.log(`server start port ${port}`); });
+server.listen(() => { console.log(`server start port ${port}`); });
 
 server.on('error', onError);
 server.on('listening', onListening);
 
 process.on('SIGTERM', () => {
-    server.close(() => {});
+    server.close(() => {
+        console.log(`server is closed by SIGTERM`);
+    });
 });
