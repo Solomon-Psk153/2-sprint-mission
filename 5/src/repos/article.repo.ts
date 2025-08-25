@@ -66,7 +66,7 @@ export const update = async ({ userId, articleId, title, content }: UpdateArticl
   }
 });
 
-export const delere = async ({ userId, articleId }: deleteArticleDataType) => db.$transaction(async (tx) => {
+export const delere = async ({ userId, articleId }: DeleteArticleDataType) => db.$transaction(async (tx) => {
   const commentToArticle = await tx.rootCommentToArticle.findMany({
     where: { articleId }
   });
@@ -166,5 +166,5 @@ export const findAllByLike = async ({ title, content, offset, limit, orderBy, us
 
   skip: offset,
   take: limit
-  
+
 });

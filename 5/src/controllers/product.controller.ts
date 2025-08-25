@@ -140,12 +140,85 @@ export const deleteProduct: RequestHandler = async (req, res, next) => {
       throw new UnauthorizedError("login is required");
     }
 
-    const productId: string = req.params.id;
+    const productId = req.params.id;
     const userId = req.user.id;
-    const deletedProduct = await productService.deleteProduct({userId, productId});
+    const deletedProductObj = await productService.deleteProduct({userId, productId});
     
-    res.status(204).json(deletedProduct);
+    res.status(204).json(deletedProductObj);
   } catch (err) {
+    next(err);
+  }
+}
+
+// 상품 좋아요
+export const likeProduct: RequestHandler = async (req, res, next) => {
+  try{
+    if (req.user == null) {
+      throw new UnauthorizedError("login is required");
+    }
+
+    const productId = req.params.id;
+    const userId = req.user.id;
+
+    const likedProductObj = await productService.likeProduct({userId, productId});
+    
+    res.status(200).json(likedProductObj);
+
+  } catch(err) {
+    next(err);
+  }
+};
+
+// 상품 좋아요 취소
+export const undoLikeProduct: RequestHandler = async(req, res, next) => {
+  try{
+    if (req.user == null) {
+      throw new UnauthorizedError("login is required");
+    }
+
+    const productId = req.params.id;
+    const userId = req.user.id;
+
+    const undoLikedProductObj = await productService.undoLikeProduct({userId, productId});
+    
+    res.status(200).json(undoLikedProductObj);
+
+  } catch(err) {
+    next(err);
+  }
+}
+
+// 상품 좋아요 목록
+export const getLikedProductsList = async(req: Request<{}, {}, {}, Record<string, string>>, res: Response, next: NextFunction) => {
+  try{
+    if (req.user == null) {
+      throw new UnauthorizedError("login is required");
+    }
+
+    const userId = req.user.id;
+
+    const q = req.query;
+
+    if (q.orderby && !["recent", "oldest"].includes(q.orderby)) {
+      throw new BadRequestError("orderby must be one of: recent, oldest");
+    } else if (q.offset && Object.is(Number(q.offset), NaN) === true) {
+      throw new BadRequestError("offset must be number");
+    } else if (q.limit && Object.is(Number(q.limit), NaN) === true) {
+      throw new BadRequestError("limit must be number");
+    }
+
+    const query = {
+      name: q.name,
+      description: q.description,
+      offset: q.offset ? Number(q.offset) : 0,
+      limit: q.limit ? Number(q.limit) : 10,
+      orderBy: productOrderBySelector(q.orderby),
+      userId
+    };
+
+    const getLikedProductsListObj = await productService.getLikedProductsList(query);
+    res.status(200).json(getLikedProductsListObj);
+  } catch(err) {
     next(err);
   }
 }

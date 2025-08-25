@@ -155,9 +155,9 @@ export const getLikedArticlesList = async (req: Request<{}, {}, {}, Record<strin
       userId
     };
 
-    const undoLikeByIdObj = await articleService.getLikedArticlesList(query);
+    const getLikedArticlesListObj = await articleService.getLikedArticlesList(query);
 
-    res.status(200).json(undoLikeByIdObj);
+    res.status(200).json(getLikedArticlesListObj);
 
   } catch (err) {
     next(err);

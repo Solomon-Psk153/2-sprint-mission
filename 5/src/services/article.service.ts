@@ -26,7 +26,7 @@ export const updateArticle = async ({userId, articleId, title, content}: UpdateA
 };
 
 // 게시글 삭제
-export const deleteArticle = async ({userId, articleId}:deleteArticleDataType) => {
+export const deleteArticle = async ({userId, articleId}:DeleteArticleDataType) => {
   const deletedArticleObj = await articleRepo.delere({userId, articleId});
   return deletedArticleObj;
 };

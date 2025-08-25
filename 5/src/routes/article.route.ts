@@ -53,7 +53,7 @@ articleRouters.delete(
 
 // 게시글 좋아요 목록 조회
 articleRouters.get(
-    '/:id',
+    '/like',
     passport.authenticate('accessToken', { session: false }),
     articleController.getLikedArticlesList
 );

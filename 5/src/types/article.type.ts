@@ -15,12 +15,12 @@ type UpdateArticleDataType = CreateArticleDataType & {
     articleId: string;
 };
 
-type deleteArticleDataType = Omit<UpdateArticleDataType, "title" | "content">
+type DeleteArticleDataType = Omit<UpdateArticleDataType, "title" | "content">
 
-type LikeArticleDataType = deleteArticleDataType;
+type LikeArticleDataType = DeleteArticleDataType;
 
 type UndoLikeArticleDataType = LikeArticleDataType;
 
 type GetLikedArticleDataType = GetArticleDataType & {
     userId: string;
-}
+};

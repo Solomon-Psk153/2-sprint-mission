@@ -205,6 +205,7 @@ export const update = async ({ userId, productId, name, description, price, tagN
 
 });
 
+// 상품 삭제
 export const delere = async({userId, productId}:DeleteProductDataType) => db.$transaction(async (tx) => {
 
   // 더 좋은 방법이 있는가?
@@ -250,4 +251,82 @@ export const delere = async({userId, productId}:DeleteProductDataType) => db.$tr
   }
 
   return { deletedProduct, deletedTags };
+});
+
+// 상품 좋아요
+export const like = async({userId, productId}: LikeProductDataType) => db.$transaction(async(tx) => {
+  const likedProductObj = await tx.productLike.create({
+    data: {
+      id: crypto.randomUUID(),
+      productId,
+      userId
+    }
+  });
+
+  await tx.product.update({
+    where:{
+      id: productId
+    },
+    data:{
+      likeCnt:{
+        increment: 1
+      }
+    }
+  });
+
+  return likedProductObj;
+});
+
+// 상품 좋아요 취소
+export const undoLike = async({userId, productId}: UndoLikeProductDataType) => db.$transaction(async(tx) => {
+  const undoLikeProductObj = await tx.productLike.delete({
+    where:{
+      productUser:{
+        productId,
+        userId
+      }
+    }
+  });
+
+  await tx.product.update({
+    where:{
+      id: productId
+    },
+
+    data:{
+      likeCnt:{
+        decrement:1
+      }
+    }
+  });
+
+  return undoLikeProductObj;
+});
+
+// 상품 좋아요 목록
+export const findAllByLike = async({name, description, offset, limit, orderBy, userId}: GetLikedProductDataType) => await db.product.findMany({
+  where: {
+    userId,
+    name: name ? {
+      contains: name,
+      mode: "insensitive"
+    } : undefined,
+    description: description ? {
+      contains: description,
+      mode: "insensitive"
+    } : undefined
+  },
+
+  select:{
+    productLikes:{
+      where:{
+        userId
+      }
+    }
+  },
+
+  orderBy,
+
+  skip: offset,
+  take: limit
 });

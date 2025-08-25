@@ -27,4 +27,10 @@ type UpdateProductDataType = CreateproductDataType & {
 type DeleteProductDataType = {
   userId: string;
   productId: string;
-}
+};
+
+type LikeProductDataType = DeleteProductDataType;
+
+type UndoLikeProductDataType = LikeProductDataType;
+
+type GetLikedProductDataType = Required<GetProductDataType>

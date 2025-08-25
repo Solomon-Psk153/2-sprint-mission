@@ -38,6 +38,24 @@ export const updateProduct = async ({ userId, productId, name, description, pric
 
 // 상품 삭제
 export const deleteProduct = async ({ userId, productId }: DeleteProductDataType) => {
-  const deletedProduct = await productRepo.delere({ userId, productId });
-  return deletedProduct;
+  const deletedProductObj = await productRepo.delere({ userId, productId });
+  return deletedProductObj;
 };
+
+// 상품 좋아요
+export const likeProduct = async({ userId, productId }: LikeProductDataType) => {
+  const likedProductObj = await productRepo.like({userId, productId});
+  return likedProductObj;
+};
+
+// 상품 좋아요 취소
+export const undoLikeProduct = async({ userId, productId }: UndoLikeProductDataType) => {
+  const undoLikedProductObj = await productRepo.undoLike({userId, productId});
+  return undoLikedProductObj;
+};
+
+// 상품 좋아요 목록
+export const getLikedProductsList = async({name, description, offset, limit, orderBy, userId}: GetLikedProductDataType) => {
+  const getLikedProductsListObj = await productRepo.findAllByLike({name, description, offset, limit, orderBy, userId});
+  return getLikedProductsListObj;
+}

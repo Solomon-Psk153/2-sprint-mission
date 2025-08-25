@@ -49,5 +49,25 @@ productRouters.delete(
     productController.deleteProduct
 );
 
+// 상품 좋아요
+productRouters.post(
+    '/:id/like',
+    passport.authenticate('accessToken', { session: false }),
+    productController.likeProduct
+);
+
+// 상품 좋아요 취소
+productRouters.delete(
+    '/:id/like',
+    passport.authenticate('accessToken', { session: false }),
+    productController.undoLikeProduct
+);
+
+// 상품 좋아요 목록
+productRouters.get(
+    '/like',
+    passport.authenticate('accessToken', { session: false }),
+    productController.getLikedProductsList
+);
 
 export default productRouters;
