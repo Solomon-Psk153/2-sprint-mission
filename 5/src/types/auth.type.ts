@@ -1,10 +1,10 @@
-type registerDataType = {
+type RegisterDataType = {
   email: string;
   password: string;
   nickname: string;
 };
 
-type registerQueryType = {
+type RegisterQueryType = {
   email: string;
   hashedPassword: string;
   nickname: string;

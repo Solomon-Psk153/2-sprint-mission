@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import * as authRepo from "../repos/auth.repo";
 
 // 회원가입
-export const register = async ({email, password, nickname}: registerDataType) => {
+export const register = async ({email, password, nickname}: RegisterDataType) => {
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);

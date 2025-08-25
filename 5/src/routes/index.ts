@@ -6,7 +6,7 @@ import tagRouters from './tag.router';
 import commentRouters from './comment.route';
 import imagesRouters from './images.route';
 import imageRouters from './image.route';
-import userRouters from './user.router';
+import userRouters from './user.route';
 
 const router = express.Router();
 router.use('/auth', authRouters);
