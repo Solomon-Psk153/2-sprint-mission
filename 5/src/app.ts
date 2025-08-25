@@ -1,11 +1,10 @@
 import createError from 'http-errors';
 import cors from 'cors';
-import express, { ErrorRequestHandler, RequestHandler } from 'express';
+import express, { RequestHandler } from 'express';
 import actuator from 'express-actuator';
 import router from './routes';
 import auth from 'express-openid-connect';
 import passport from './middlewares/passport/index';
-import multer from 'multer';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import session from 'express-session';
