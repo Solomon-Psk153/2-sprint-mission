@@ -1,4 +1,23 @@
 # 참고한 사이트와 코드
+
+나중에 시스템이 커지면, 편할 수 있다.(업로드한 이미지 관리) 보통은 URL로 방문자에게 제공하는 것 같다.
+이미지는 유저 폴더를 따로 만들어서 유저 별로 모아두는 게 관리에 편하다. 그렇지 않은 경우에는 한번 생각해봐야 한다.
+```prisma
+model Image {
+  id           String   @id
+  mimetype     String
+  originalname String
+  filename     String   @unique
+  path         String   @unique
+  createdAt    DateTime @default(now()) @map("created_at")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String @map("user_id")
+  
+  @@map("images")
+}
+
+---
+```
 AddressInfo가 net에 있었다는 것을 알게 되었다.
 ```ts
 import { AddressInfo } from 'net';
@@ -82,12 +101,12 @@ protected는 strict mode에서 지원되는 것이다.
 https://github.com/prisma/prisma/releases/tag/6.7.0
 https://www.prisma.io/docs/orm/prisma-schema/overview/location#multi-file-prisma-schema
 
-prisma 폴더에 models를 활용하면, part를 붙이지 않아도 된다.
+prisma 폴더에 models를 활용하고 package.json이 위치한 곳에 prisma.config.ts를 주면, part를 붙이지 않아도 되고 merge하지 않아도 된다.
 
 https://github.com/pi0/config-dir
-.config를 설정하면 좋다고 한다.
+.config를 설정하면 좋다고 한다. 하지만, 지금은 굳이 필요하지 않을 것 같다.
 
 ---
-typedSQL도 도입되었다고 한다. 5.19.0
+typedSQL도 도입되었다고 한다. 5.19.0 하지만, 해당 필드가 존재하지 않는다. 
 https://www.reddit.com/r/node/comments/1fhso6x/whats_everyones_opinion_of_prismas_typedsql_update/?tl=ko
 

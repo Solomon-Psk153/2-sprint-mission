@@ -4,7 +4,9 @@ model Image {
   originalname String
   filename     String   @unique
   path         String   @unique
-  createdAt    DateTime @default(now())
+  createdAt    DateTime @default(now()) @map("created_at")
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId       String
+  userId       String @map("user_id")
+  
+  @@map("images")
 }
