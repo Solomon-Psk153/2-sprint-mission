@@ -113,3 +113,7 @@ https://www.reddit.com/r/node/comments/1fhso6x/whats_everyones_opinion_of_prisma
 ---
 https://stackoverflow.com/questions/42198973/does-it-need-to-socket-leave-a-room-on-disconnect-in-socket-io
 socket은 끊어지면 room에서 leave할 필요는 없다.
+
+---
+https://jknt.in/posts/using-db-timestamptz-prisma
+Using @db.Timestamptz(0) can lead to unexpected rounding issues

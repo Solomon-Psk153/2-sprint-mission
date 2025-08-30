@@ -1,0 +1,13 @@
+model Notification {
+  id        String   @id @db.VarChar(40)
+  type      String
+  message   String
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp()
+
+  userId String @map("user_id") @db.VarChar(40)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}

@@ -1,9 +1,11 @@
-// model ProductTag {
-//   id        String @id
-//   productId String
-//   tagId     String
+model ProductTag {
+  id        String @id @db.VarChar(40)
+  productId String @map("product_id") @db.VarChar(40)
+  tagId     String @map("tag_id") @db.VarChar(40)
 
-//   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-//   tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
-// }
+  tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@map("product_tags")
+}
