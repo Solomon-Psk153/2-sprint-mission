@@ -15,7 +15,8 @@ const config: Config = {
     },
   },
   testMatch: ['**/?(*.)+(spec|test).(ts|js)'],
-  testTimeout: 3000
+  testTimeout: 3000,
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
 };
 
 export default config;
