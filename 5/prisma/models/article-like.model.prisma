@@ -1,0 +1,14 @@
+model ArticleLike {
+  id String @id @db.VarChar(40)
+
+  articleId String   @map("article_id") @db.VarChar(40)
+  userId    String   @map("user_id") @db.VarChar(40)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp()
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique(name: "articleUser", [articleId, userId])
+  @@map("article_likes")
+}

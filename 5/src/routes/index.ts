@@ -7,6 +7,7 @@ import commentRouters from './comment.route';
 import imagesRouters from './images.route';
 import imageRouters from './image.route';
 import userRouters from './user.route';
+import notificationRouters from './notification.route';
 
 const router = express.Router();
 router.use('/auth', authRouters);
@@ -17,5 +18,6 @@ router.use('/tags', tagRouters);
 router.use('/images', imagesRouters);
 router.use('/image', imageRouters);
 router.use('/user', userRouters);
+router.use('/notify', notificationRouters);
 
 export default router;

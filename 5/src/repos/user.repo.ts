@@ -14,7 +14,7 @@ export const findById = async (userId: string) => await db.user.findUniqueOrThro
 });
 
 // 유저 비밀번호 수정
-export const updatePassword = async ({ userId, hashedPassword }: UserInfoType) => await db.user.update({
+export const updatePassword = async ({ userId, hashedPassword }: UserInfoQueryType) => await db.user.update({
   where: {
     id: userId
   },
@@ -25,7 +25,7 @@ export const updatePassword = async ({ userId, hashedPassword }: UserInfoType) =
 });
 
 // 유저 정보 수정
-export const updateUserInfo = async ({ userId, nickname, email }: UserInfoType) => await db.user.update({
+export const updateUserInfo = async ({ userId, nickname, email }: UserInfoQueryType) => await db.user.update({
   where: {
     id: userId
   },

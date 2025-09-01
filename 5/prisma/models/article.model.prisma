@@ -1,12 +1,16 @@
-// model Article {
-//   id        String   @id
-//   title     String
-//   content   String
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   userId    String
+model Article {
+  id        String   @id @db.VarChar(40)
+  title     String
+  content   String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp()
+  userId    String   @map("user_id") @db.VarChar(40)
+  likeCnt   BigInt   @default(0) @map("like_cnt")
 
-//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-//   rootComments RootCommentToArticle[]
-// }
+  rootComments RootCommentToArticle[]
+  articleLikes ArticleLike[]
+
+  @@map("articles")
+}

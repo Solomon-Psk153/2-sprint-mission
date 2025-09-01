@@ -1,17 +1,19 @@
-// model Comment {
-//   id        String   @id
-//   parentId  String?
-//   replyId   String?
-//   title     String?
-//   content   String
-//   userId    String
-//   isDeleted Boolean  @default(false)
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
+model Comment {
+  id        String   @id @db.VarChar(40)
+  parentId  String?  @map("parent_id") @db.VarChar(40)
+  replyId   String?  @map("reply_id") @db.VarChar(40)
+  title     String?
+  content   String
+  userId    String   @map("user_id") @db.VarChar(40)
+  isDeleted Boolean  @default(false) @map("is_deleted")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp()
 
-//   parent   Comment?  @relation("CommentToComments", fields: [parentId], references: [id], onDelete: Cascade)
-//   comments Comment[] @relation("CommentToComments")
+  parent   Comment?  @relation("CommentToComments", fields: [parentId], references: [id], onDelete: Cascade)
+  comments Comment[] @relation("CommentToComments")
 
-//   rootCommentsOfArticle RootCommentToArticle[]
-//   rootCommentsOfProduct RootCommentToProduct[]
-// }
+  rootCommentsOfArticle RootCommentToArticle[]
+  rootCommentsOfProduct RootCommentToProduct[]
+
+  @@map("comments")
+}

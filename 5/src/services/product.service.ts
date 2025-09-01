@@ -1,28 +1,30 @@
 import * as productRepo from "../repos/product.repo";
-import { isLikedProduct } from "../utils/isLiked-2-obj.type";
+import { isLikedToProduct } from "../utils/isLiked-2-obj.type";
+import * as notifyRepo from "../repos/notification.repo";
+import ScoketApp from "../sockets/socket-app.socket";
 
 // 상품 목록 조회(userId는 추후에 사용될 것으로 현재는 undefined 상태)
 export const getProductsList = async ({ name, description, offset, limit, orderBy, userId }: GetProductDataType) => {
   const productsListObj = await productRepo.findAll({ name, description, offset, limit, orderBy });
-  if(userId) {
+  if (userId) {
     return productsListObj.map(async (product) => {
       const productId = product.id;
-      const isLiked = await isLikedProduct({userId, productId});
-      return {...product, isLiked};
+      const isLiked = await isLikedToProduct({ userId, productId });
+      return { ...product, isLiked };
     });
   }
-  
+
   return productsListObj;
 };
 
 // 상품 상세 조회
-export const getProductById = async ({userId, productId}: GetProductByIdQueryDataType) => {
+export const getProductById = async ({ userId, productId }: GetProductByIdQueryDataType) => {
   const productByIdObj = await productRepo.findById(productId);
 
-  if(userId){
+  if (userId) {
     const productId = productByIdObj.id;
-    const isLiked = await isLikedProduct({userId, productId});
-    return {...productByIdObj, isLiked};
+    const isLiked = await isLikedToProduct({ userId, productId });
+    return { ...productByIdObj, isLiked };
   }
 
   return productByIdObj;
@@ -32,11 +34,11 @@ export const getProductById = async ({userId, productId}: GetProductByIdQueryDat
 export const getProductsByTag = async ({ tagName, offset, limit, orderBy, userId }: GetProductDataWithTagType) => {
   const productsByTagObj = await productRepo.findAllByTag({ tagName, offset, limit, orderBy });
 
-  if(userId){
+  if (userId) {
     productsByTagObj.map(async (product) => {
       const productId = product.id;
-      const isLiked = await isLikedProduct({userId, productId});
-      return {...product, isLiked};
+      const isLiked = await isLikedToProduct({ userId, productId });
+      return { ...product, isLiked };
     });
   }
   return productsByTagObj;
@@ -69,6 +71,18 @@ export const deleteProduct = async ({ userId, productId }: DeleteProductDataType
 // 상품 좋아요
 export const likeProduct = async ({ userId, productId }: LikeProductDataType) => {
   const likedProductObj = await productRepo.like({ userId, productId });
+
+  const query = {
+    id: crypto.randomUUID(),
+    type: "product-like",
+    message: `${userId}가 상품에 좋아요를 눌렀어요`,
+    userId
+  };
+
+  const notificationObj = await notifyRepo.create(query);
+
+  ScoketApp.sendNotification(notificationObj);
+
   return likedProductObj;
 };
 

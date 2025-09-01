@@ -64,7 +64,7 @@ export const updatePassword: RequestHandler = async (req, res, next) => {
     }
 
     const userId = req.user.id;
-    const { newPassword }: UserInfoType = req.body;
+    const { newPassword }: UserInfoQueryType = req.body;
 
     const status = await uesrService.updatePassword({userId, newPassword});
 
@@ -82,7 +82,7 @@ export const updateUserInfo: RequestHandler = async (req, res, next) => {
     }
 
     const userId = req.user.id;
-    const { nickname, email }: UserInfoType = req.body;
+    const { nickname, email }: UserInfoQueryType = req.body;
     const updatedUserInfoObj = await uesrService.updateUserInfo({userId, nickname, email});
 
     res.status(200).json(updatedUserInfoObj);

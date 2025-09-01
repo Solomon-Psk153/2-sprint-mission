@@ -1,18 +1,22 @@
-// model User {
-//   id         String   @id
-//   nickname   String?
-//   email      String
-//   provider   String // ex: 'google', 'kakao', 'facebook', 'local'
-//   providerId String?  @unique // 해당 플랫폼의 user ID
-//   idToken    String? // OIDC용 (Google, Apple 등)
-//   password   String?
-//   createdAt  DateTime @default(now())
-//   updatedAt  DateTime @updatedAt
-//   imageUrl   String?
+model User {
+  id         String   @id @db.VarChar(40)
+  nickname   String?
+  email      String
+  provider   String   @db.VarChar(30) // eg: 'google', 'kakao', 'facebook', 'local'
+  providerId String?  @unique @map("provider_id") // 해당 플랫폼의 user ID
+  idToken    String?  @map("id_token") // OIDC용 (Google, Apple 등)
+  password   String?
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamp()
+  imageUrl   String?  @map("image_url")
 
-//   products Product[]
-//   articles Article[]
-//   images   Image[]
+  products      Product[]
+  articles      Article[]
+  images        Image[]
+  productLikes  ProductLike[]
+  articleLikes  ArticleLike[]
+  notifications Notification[]
 
-//   @@unique(name: "emailProvider", [email, provider])
-// }
+  @@unique(name: "emailProvider", [email, provider])
+  @@map("users")
+}

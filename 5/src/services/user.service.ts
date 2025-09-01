@@ -8,7 +8,7 @@ export const getUserInfo = async (userId: string) => {
 };
 
 // 유저 비밀번호 수정
-export const updatePassword = async ({ userId, newPassword }: UserInfoType) => {
+export const updatePassword = async ({ userId, newPassword }: UserInfoQueryType) => {
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
@@ -18,7 +18,7 @@ export const updatePassword = async ({ userId, newPassword }: UserInfoType) => {
 };
 
 // 유저 정보 수정
-export const updateUserInfo = async function ({ userId, nickname, email }: UserInfoType) {
+export const updateUserInfo = async function ({ userId, nickname, email }: UserInfoQueryType) {
     const updatedUserInfoObj = await userRepo.updateUserInfo({ userId, nickname, email });
     return updatedUserInfoObj;
 };
