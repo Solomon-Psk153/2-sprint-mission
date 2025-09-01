@@ -1,5 +1,6 @@
 import * as articleRepo from "../repos/article.repo";
 import * as notifyRepo from "../repos/notification.repo";
+import ScoketApp from "../sockets/socket-app.socket";
 import { isLikedToArticle } from "../utils/isLiked-2-obj.type";
 import db from "../utils/prisma.util";
 
@@ -8,11 +9,11 @@ export const getArticlesList = async ({ title, content, offset, limit, orderBy, 
 
   const articlesListObj = await articleRepo.findAll({ title, content, offset, limit, orderBy });
 
-  if(userId){
+  if (userId) {
     return articlesListObj.map(async (article) => {
       const articleId = article.id;
-      const isLiked = await isLikedToArticle({userId, articleId});
-      return {...article, isLiked};
+      const isLiked = await isLikedToArticle({ userId, articleId });
+      return { ...article, isLiked };
     });
   }
 
@@ -20,58 +21,62 @@ export const getArticlesList = async ({ title, content, offset, limit, orderBy, 
 };
 
 // 게시글 상세 조회
-export const getArticleById = async ({userId, articleId}: GetArticleByIdQueryDataType) => {
+export const getArticleById = async ({ userId, articleId }: GetArticleByIdQueryDataType) => {
   const articleByIdObj = await articleRepo.findById(articleId);
 
-  if(userId){
+  if (userId) {
     const articleId = articleByIdObj.id;
-    const isLiked = await isLikedToArticle({userId, articleId});
-    return {...articleByIdObj, isLiked};
+    const isLiked = await isLikedToArticle({ userId, articleId });
+    return { ...articleByIdObj, isLiked };
   }
-  
+
   return articleByIdObj;
 };
 
 // 게시글 등록
-export const createArticle = async ( {userId, title, content}: CreateArticleDataType ) => {
-  const createdArticleObj = await articleRepo.create({userId, title, content});
+export const createArticle = async ({ userId, title, content }: CreateArticleDataType) => {
+  const createdArticleObj = await articleRepo.create({ userId, title, content });
   return createdArticleObj;
 };
 
 // 게시글 수정
-export const updateArticle = async ({userId, articleId, title, content}: UpdateArticleDataType) => {
-  const updatedArticleObj = await articleRepo.update({userId, articleId, title, content});
+export const updateArticle = async ({ userId, articleId, title, content }: UpdateArticleDataType) => {
+  const updatedArticleObj = await articleRepo.update({ userId, articleId, title, content });
   return updatedArticleObj;
 };
 
 // 게시글 삭제
-export const deleteArticle = async ({userId, articleId}:DeleteArticleDataType) => {
-  const deletedArticleObj = await articleRepo.delere({userId, articleId});
+export const deleteArticle = async ({ userId, articleId }: DeleteArticleDataType) => {
+  const deletedArticleObj = await articleRepo.delere({ userId, articleId });
   return deletedArticleObj;
 };
 
 // 게시글 좋아요
-export const likeArticle = async({userId, articleId}:LikeArticleDataType) => db.$transaction(async(tx) =>{
-  const likedArticleObj = await articleRepo.like({userId, articleId});
+export const likeArticle = async ({ userId, articleId }: LikeArticleDataType) => db.$transaction(async (tx) => {
+  const likedArticleObj = await articleRepo.like({ userId, articleId });
 
   const query = {
-    type: "like",
+    id: crypto.randomUUID(),
+    type: "article-like",
     message: `${userId}가 게시글에 좋아요를 눌렀어요`,
     userId
   };
 
   const notificationObj = await notifyRepo.create(query);
-  return {likedArticleObj, notificationObj};
+
+  ScoketApp.sendNotification(notificationObj);
+
+  return { likedArticleObj, notificationObj };
 });
 
 // 게시글 좋아요 취소
-export const undoLikeArticle = async({userId, articleId}: UndoLikeArticleDataType) => {
-  const undoLikedArticleObj = await articleRepo.undoLike({userId, articleId});
+export const undoLikeArticle = async ({ userId, articleId }: UndoLikeArticleDataType) => {
+  const undoLikedArticleObj = await articleRepo.undoLike({ userId, articleId });
   return undoLikedArticleObj;
 }
 
 // 게시글 좋아요 목록
-export const getLikedArticlesList = async({title, content, offset, limit, orderBy, userId}: GetLikedArticleDataType) => {
-  const getLikedArticlesListObj = await articleRepo.findAllByLike({title, content, offset, limit, orderBy, userId});
+export const getLikedArticlesList = async ({ title, content, offset, limit, orderBy, userId }: GetLikedArticleDataType) => {
+  const getLikedArticlesListObj = await articleRepo.findAllByLike({ title, content, offset, limit, orderBy, userId });
   return getLikedArticlesListObj;
 }

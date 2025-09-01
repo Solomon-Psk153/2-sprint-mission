@@ -4,7 +4,7 @@ import app from '../app';
 import http from 'http'
 import dotenv from 'dotenv';
 import { PORT } from '../utils/env.util';
-import { initSocket } from '../socket';
+import ScoketApp from '../sockets/socket-app.socket';
 
 dotenv.config({ path: '../.env' });
 
@@ -61,8 +61,15 @@ const onListening = function (): void {
 
 app.set('port', port);
 const server = http.createServer(app);
-const io = initSocket(server);
-app.set('io', io);
+ScoketApp.initialize(server,
+    {
+        cors: {
+            origin: "*",
+            methods: ["GET", "POST"],
+        },
+        transports: ["polling", "websocket"]
+    }
+);
 
 server.listen(() => { console.log(`server start port ${port}`); });
 

@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import * as authService from "../services/auth.service";
-import { generateAccessToken, generateRefreshToken } from "../utils/tokens";
+import { generateAccessToken, generateRefreshToken } from "../utils/tokens.util";
 import { UnauthorizedError } from "../utils/error/400.error";
 
 // 회원가입
