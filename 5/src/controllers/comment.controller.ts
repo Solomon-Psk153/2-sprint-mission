@@ -12,6 +12,8 @@ export const getRootCommentsList = async (req: Request<{ [key: string]: string; 
       throw new BadRequestError("orderby must be one of: recent, oldest");
     } else if (q.limit && Object.is(Number(q.limit), NaN) === true) {
       throw new BadRequestError("limit must be number");
+    } else if (Number(q.limit) < 0) {
+      throw new BadRequestError("limit must be whole number");
     }
 
     const query = {
@@ -43,6 +45,8 @@ export const getCommentsOfRootComment = async (req: Request<{ [key: string]: str
       throw new BadRequestError("offset must be number");
     } else if (q.limit && Object.is(Number(q.limit), NaN) === true) {
       throw new BadRequestError("limit must be number");
+    } else if (Number(q.offset) < 0 || Number(q.limit) < 0) {
+      throw new BadRequestError("offset or limit must be whole number");
     }
 
     const query = {

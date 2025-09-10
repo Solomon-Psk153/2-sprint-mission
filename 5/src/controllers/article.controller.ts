@@ -14,6 +14,8 @@ export const getArticlesList = async (req: Request<{}, {}, {}, Record<string, st
       throw new BadRequestError("offset must be number");
     } else if (q.limit && Object.is(Number(q.limit), NaN) === true) {
       throw new BadRequestError("limit must be number");
+    } else if (Number(q.offset) < 0 || Number(q.limit) < 0) {
+      throw new BadRequestError("offset or limit must be whole number");
     }
 
     const userId = req.user ? req.user.id : undefined;
@@ -154,6 +156,8 @@ export const getLikedArticlesList = async (req: Request<{}, {}, {}, Record<strin
       throw new BadRequestError("offset must be number");
     } else if (q.limit && Object.is(Number(q.limit), NaN) === true) {
       throw new BadRequestError("limit must be number");
+    } else if (Number(q.offset) < 0 || Number(q.limit) < 0) {
+      throw new BadRequestError("offset or limit must be whole number");
     }
 
     const query = {

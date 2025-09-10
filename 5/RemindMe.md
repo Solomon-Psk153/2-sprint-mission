@@ -117,3 +117,6 @@ socket은 끊어지면 room에서 leave할 필요는 없다.
 ---
 https://jknt.in/posts/using-db-timestamptz-prisma
 Using @db.Timestamptz(0) can lead to unexpected rounding issues
+
+---
+jest의 헬퍼 함수를 정의해서 사용하면, 더 깔끔한 함수를 만들 수 있다. 하지만, 이는 레거시 방식이다.

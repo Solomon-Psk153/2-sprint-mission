@@ -44,7 +44,7 @@ export const getProductsByTag = async ({ tagName, offset, limit, orderBy, userId
   return productsByTagObj;
 };
 
-// 상품 태그 목록 조회
+// 태그 목록 조회
 export const getTags = async ({ offset, limit, orderBy }: GetProductTagsType) => {
   const allTagsObj = await productRepo.findTags({ offset, limit, orderBy });
   return allTagsObj;

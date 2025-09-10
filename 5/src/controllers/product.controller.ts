@@ -14,6 +14,8 @@ export const getProductList = async (req: Request<{}, {}, {}, Record<string, str
       throw new BadRequestError("offset must be number");
     } else if (q.limit && Object.is(Number(q.limit), NaN) === true) {
       throw new BadRequestError("limit must be number");
+    } else if (Number(q.offset) < 0 || Number(q.limit) < 0) {
+      throw new BadRequestError("offset or limit must be whole number");
     }
 
     const userId = req.user ? req.user.id : undefined;
@@ -40,7 +42,7 @@ export const getProductById: RequestHandler = async (req, res, next) => {
     const productId = req.params.id;
     const userId = req.user ? req.user.id : undefined;
 
-    const productByIdObj = await productService.getProductById({userId, productId});
+    const productByIdObj = await productService.getProductById({ userId, productId });
     res.status(200).json(productByIdObj);
   } catch (err) {
     next(err);
@@ -59,6 +61,8 @@ export const getProductsByTag = async (req: Request<{ [key: string]: string; }, 
       throw new BadRequestError("offset must be number");
     } else if (q.limit && Object.is(Number(q.limit), NaN) === true) {
       throw new BadRequestError("limit must be number");
+    } else if (Number(q.offset) < 0 || Number(q.limit) < 0) {
+      throw new BadRequestError("offset or limit must be whole number");
     }
 
     const tagName: string = req.params.name;
@@ -80,17 +84,19 @@ export const getProductsByTag = async (req: Request<{ [key: string]: string; }, 
   }
 }
 
-// 상품 태그 목록 조회
+// 태그 목록 조회
 export const getTags = async (req: Request<{}, {}, {}, Record<string, string>>, res: Response, next: NextFunction) => {
   try {
     const q = req.query;
 
-    if (q.orderby && !["recent", "oldest", "highestprice", "lowestprice"].includes(q.orderby)) {
-      throw new BadRequestError("orderby must be one of: recent, oldest, highestprice, lowestprice");
+    if (q.orderby && !["recent", "oldest"].includes(q.orderby)) {
+      throw new BadRequestError("orderby must be one of: recent, oldest");
     } else if (q.offset && Object.is(Number(q.offset), NaN) === true) {
       throw new BadRequestError("offset must be number");
     } else if (q.limit && Object.is(Number(q.limit), NaN) === true) {
       throw new BadRequestError("limit must be number");
+    } else if (Number(q.offset) < 0 || Number(q.limit) < 0) {
+      throw new BadRequestError("offset or limit must be whole number");
     }
 
     const query = {
@@ -113,7 +119,7 @@ export const createProduct: RequestHandler = async (req, res, next) => {
       throw new UnauthorizedError("login is required");
     }
 
-    const { name, description, price, tags:tagNames } = req.body;
+    const { name, description, price, tags: tagNames } = req.body;
     const userId = req.user.id;
     const createdProduct = await productService.createProduct({ userId, name, description, price, tagNames });
 
@@ -130,10 +136,10 @@ export const updateProduct: RequestHandler = async (req, res, next) => {
       throw new UnauthorizedError("login is required");
     }
 
-    const { name, description, price, tags:tagNames } = req.body;
+    const { name, description, price, tags: tagNames } = req.body;
     const productId = req.params.id;
     const userId = req.user.id;
-    const updatedProduct = await productService.updateProduct({userId, productId, name, description, price, tagNames});
+    const updatedProduct = await productService.updateProduct({ userId, productId, name, description, price, tagNames });
 
     res.status(200).json(updatedProduct);
   } catch (err) {
@@ -150,8 +156,8 @@ export const deleteProduct: RequestHandler = async (req, res, next) => {
 
     const productId = req.params.id;
     const userId = req.user.id;
-    const deletedProductObj = await productService.deleteProduct({userId, productId});
-    
+    const deletedProductObj = await productService.deleteProduct({ userId, productId });
+
     res.status(204).json(deletedProductObj);
   } catch (err) {
     next(err);
@@ -160,7 +166,7 @@ export const deleteProduct: RequestHandler = async (req, res, next) => {
 
 // 상품 좋아요
 export const likeProduct: RequestHandler = async (req, res, next) => {
-  try{
+  try {
     if (req.user == null) {
       throw new UnauthorizedError("login is required");
     }
@@ -168,18 +174,18 @@ export const likeProduct: RequestHandler = async (req, res, next) => {
     const productId = req.params.id;
     const userId = req.user.id;
 
-    const likedProductObj = await productService.likeProduct({userId, productId});
-    
+    const likedProductObj = await productService.likeProduct({ userId, productId });
+
     res.status(200).json(likedProductObj);
 
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 };
 
 // 상품 좋아요 취소
-export const undoLikeProduct: RequestHandler = async(req, res, next) => {
-  try{
+export const undoLikeProduct: RequestHandler = async (req, res, next) => {
+  try {
     if (req.user == null) {
       throw new UnauthorizedError("login is required");
     }
@@ -187,18 +193,18 @@ export const undoLikeProduct: RequestHandler = async(req, res, next) => {
     const productId = req.params.id;
     const userId = req.user.id;
 
-    const undoLikedProductObj = await productService.undoLikeProduct({userId, productId});
-    
+    const undoLikedProductObj = await productService.undoLikeProduct({ userId, productId });
+
     res.status(200).json(undoLikedProductObj);
 
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 }
 
 // 상품 좋아요 목록
-export const getLikedProductsList = async(req: Request<{}, {}, {}, Record<string, string>>, res: Response, next: NextFunction) => {
-  try{
+export const getLikedProductsList = async (req: Request<{}, {}, {}, Record<string, string>>, res: Response, next: NextFunction) => {
+  try {
     if (req.user == null) {
       throw new UnauthorizedError("login is required");
     }
@@ -213,6 +219,8 @@ export const getLikedProductsList = async(req: Request<{}, {}, {}, Record<string
       throw new BadRequestError("offset must be number");
     } else if (q.limit && Object.is(Number(q.limit), NaN) === true) {
       throw new BadRequestError("limit must be number");
+    } else if (Number(q.offset) < 0 || Number(q.limit) < 0) {
+      throw new BadRequestError("offset or limit must be whole number");
     }
 
     const query = {
@@ -226,7 +234,7 @@ export const getLikedProductsList = async(req: Request<{}, {}, {}, Record<string
 
     const getLikedProductsListObj = await productService.getLikedProductsList(query);
     res.status(200).json(getLikedProductsListObj);
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 }

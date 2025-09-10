@@ -81,7 +81,7 @@ export const findAllByTag = async ({ tagName, offset, limit, orderBy, userId }: 
 
 });
 
-// 상품 태그 목록 조회
+// 태그 목록 조회
 export const findTags = async ({ offset, limit, orderBy }: GetProductTagsType) => await db.tag.findMany({
   orderBy,
   skip: offset,

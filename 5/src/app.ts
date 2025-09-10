@@ -9,7 +9,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import session from 'express-session';
 import { errorHandler } from './middlewares/errorHandler';
-import { SESSION_SECRET } from './utils/env.util';
+import { SESSION_SECRET } from './utils/consts/env.util';
 // import cookieParser from 'cookie-parser';
 
 const app = express();

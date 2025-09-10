@@ -35,6 +35,8 @@ export const getUserProductList = async (req: Request<{}, {}, {}, Record<string,
       throw new BadRequestError("offset must be number");
     } else if (q.limit && Object.is(Number(q.limit), NaN) === true) {
       throw new BadRequestError("limit must be number");
+    } else if (Number(q.offset) < 0 || Number(q.limit) < 0) {
+      throw new BadRequestError("offset or limit must be whole number");
     }
 
     const userId = req.user.id;
